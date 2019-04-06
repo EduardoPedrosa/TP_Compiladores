@@ -211,15 +211,14 @@ public class AnalisadorLexico {
 				}
 			} 
 			if(!encontrouPalavra) {
-				while((Character.isDigit(caracter) && !primeiroCaracter) || Character.isLetter(caracter)) {
+				while((Character.isDigit(caracter) && !primeiroCaracter) || Character.isLetter(caracter)) { //se for o primeiro caracter precisa ser letra se nao pode ser letra ou digito
 					palavra += caracter;
 					caracter = (char) arquivo.read();
 					if(Character.isDigit(caracter) || Character.isLetter(caracter)) {
 						palavra += caracter;
 					}
 				}
-				System.out.println(palavra);
-				//se não, criar token de identificador
+				//criar token de identificador
 			}
 		}
 	}
