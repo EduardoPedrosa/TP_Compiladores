@@ -1,0 +1,4 @@
+todos os arquivos formam um único autômato, só estão separados para melhor visualização.
+existe apenas um estado denominado ident. só foi separado para evitar bagunçar o automato.
+letra define caracteres de a..z, dígito define caracteres de 0..9.
+outro define qualquer caractere diferente de letra e dígito.
