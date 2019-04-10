@@ -21,7 +21,23 @@ public class AnalisadorLexico {
 		
 	}
 	
-	public void Analisar(BufferedReader arquivo){
-		
+	public void Analisar(BufferedReader arquivo) throws IOException{
+		String linha = "";
+		String palavra = "";
+		int numLinha = 0;
+		while((linha = arquivo.readLine()) != null) {
+			++numLinha;
+			int numColuna = 0;
+			for(int i = 0; i < linha.length(); i++) {
+				numColuna++;
+				if(!Character.isWhitespace((linha.charAt(i)))) {
+					palavra += linha.charAt(i);
+				}
+				Token.TipoToken tipoToken = automato.executar(linha.charAt(i));
+				if(tipoToken != null) {
+					System.out.println(palavra);
+				}	
+			}
+		}	
 	}
 }
