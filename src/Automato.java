@@ -142,6 +142,7 @@ public class Automato {
 		transicao[44][Alfabeto.N.ordinal()] = 45;
 		transicao[45][Alfabeto.OUTRO.ordinal()] = 46;											
 		
+		
 	}
 	
 	private boolean isEstadoFinal(int proxEstado) {
