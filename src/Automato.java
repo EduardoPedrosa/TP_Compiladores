@@ -1,13 +1,13 @@
 import java.util.HashMap;
 
 public class Automato {
-	private enum Alfabeto{I,N,T,F,L,O,A,S,R,U,C,E,W,H,V,D,AP,FP,ACH,FCH,ACO,FCO,IGUAL,MAIOR,MENOR,MAIS,MENOS,ASTERISCO,BARRA,PONTOVIRGULA,LETRA,DIGITO,OUTRO};
+	private enum Alfabeto{I,N,T,F,L,O,A,S,R,U,C,E,W,H,V,D,LETRA,AP,FP,ACH,FCH,ACO,FCO,IGUAL,MAIOR,MENOR,MAIS,MENOS,ASTERISCO,BARRA,PONTOVIRGULA,DIGITO,OUTRO,EXCLAMACAO,PONTO};
 	private int estadoAtual;
 	private int[][] transicao;
 	private HashMap<Integer,Token.TipoToken> estadosFinais;
 	private HashMap<Character, Alfabeto> palavrasDoAlfabeto = new HashMap<Character, Alfabeto>();
 	public Automato () {
-		transicao = new int[96][33];
+		transicao = new int[96][35];
 		estadosFinais = new HashMap<Integer, Token.TipoToken>();	
 		palavrasDoAlfabeto.put('a',Alfabeto.A);
 		palavrasDoAlfabeto.put('b',Alfabeto.LETRA);
@@ -101,7 +101,9 @@ public class Automato {
 		transicao[0][Alfabeto.S.ordinal()] = 23;
 		transicao[0][Alfabeto.E.ordinal()] = 30;
 		transicao[0][Alfabeto.W.ordinal()] = 34;
-		transicao[0][Alfabeto.R.ordinal()] = 40;		
+		transicao[0][Alfabeto.R.ordinal()] = 40;
+		transicao[0][Alfabeto.LETRA.ordinal()] = 47;
+		//Faltam algumas letras do alfabeto que "LETRA" não abrange
 		transicao[1][Alfabeto.F.ordinal()] = 2;	
 		transicao[1][Alfabeto.N.ordinal()] = 4;
 		transicao[2][Alfabeto.OUTRO.ordinal()] = 3;	
@@ -142,6 +144,42 @@ public class Automato {
 		transicao[44][Alfabeto.N.ordinal()] = 45;
 		transicao[45][Alfabeto.OUTRO.ordinal()] = 46;											
 		
+		transicao[0][Alfabeto.MAIS.ordinal()] = 49;
+		transicao[0][Alfabeto.DIGITO.ordinal()] = 51;
+		transicao[0][Alfabeto.MENOS.ordinal()] = 56;
+		transicao[0][Alfabeto.ASTERISCO.ordinal()] = 58;
+		transicao[0][Alfabeto.BARRA.ordinal()] = 60;
+		transicao[0][Alfabeto.MENOR.ordinal()] = 66;
+		transicao[0][Alfabeto.MAIOR.ordinal()] = 70;
+		transicao[0][Alfabeto.IGUAL.ordinal()] = 74;
+		transicao[0][Alfabeto.EXCLAMACAO.ordinal()] = 78;
+		transicao[0][Alfabeto.PONTOVIRGULA.ordinal()] = 81;
+		transicao[0][Alfabeto.ACH.ordinal()] = 83;
+		transicao[0][Alfabeto.FCH.ordinal()] = 85;
+		transicao[0][Alfabeto.ACO.ordinal()] = 87;
+		transicao[0][Alfabeto.FCO.ordinal()] = 89;
+		transicao[0][Alfabeto.AP.ordinal()] = 91;
+		transicao[0][Alfabeto.FP.ordinal()] = 93;
+		for(int i = 0; i < 35; i++){ //Qualquer caractere, revisar
+			transicao[49][i] = 50;
+			transicao[56][i] = 57;
+		}
+		transicao[51][Alfabeto.DIGITO.ordinal()] = 51;
+		for(int i = 0; i < 17; i++){ //Lê todas as letras
+			transicao[51][i] = 52;
+			transicao[54][i] = 52;
+			transicao[61][i] = 62;
+		}
+		transicao[51][Alfabeto.OUTRO.ordinal()] = 52;
+		transicao[51][Alfabeto.PONTO.ordinal()] = 53;
+		transicao[53][Alfabeto.DIGITO.ordinal()] = 54;
+		transicao[54][Alfabeto.DIGITO.ordinal()] = 54;
+		transicao[54][Alfabeto.OUTRO.ordinal()] = 55;
+		transicao[58][Alfabeto.OUTRO.ordinal()] = 59; //Conferir
+		transicao[60][Alfabeto.ASTERISCO.ordinal()] = 61;
+		transicao[60][Alfabeto.OUTRO.ordinal()] = 65;
+		transicao[61][Alfabeto.DIGITO.ordinal()] = 62;
+		transicao[61][Alfabeto.OUTRO.ordinal()] = 62;
 		
 	}
 	
