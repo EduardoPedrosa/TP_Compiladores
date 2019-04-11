@@ -1,11 +1,18 @@
 import java.util.HashMap;
 
 public class Automato {
-	private enum Alfabeto{I,N,T,F,L,O,A,S,R,U,C,E,W,H,V,D,LETRA,AP,FP,ACH,FCH,ACO,FCO,IGUAL,MAIOR,MENOR,MAIS,MENOS,ASTERISCO,BARRA,PONTOVIRGULA,DIGITO,OUTRO,EXCLAMACAO,PONTO};
+	private enum Alfabeto{I,N,T,F,L,O,A,S,R,U,C,E,W,H,V,D,LETRA,DIGITO,AP,FP,ACH,FCH,ACO,FCO,IGUAL,MAIOR,MENOR,MAIS,MENOS,ASTERISCO,BARRA,PONTOVIRGULA,OUTRO,EXCLAMACAO,PONTO};
 	private int estadoAtual;
 	private int[][] transicao;
 	private HashMap<Integer,Token.TipoToken> estadosFinais;
 	private HashMap<Character, Alfabeto> palavrasDoAlfabeto = new HashMap<Character, Alfabeto>();
+
+	private final void setTransicoesPra47(int estado){
+		for(int i = 0; i < 18; i++){
+			transicao[estado][i] = 47;
+		}
+	}
+
 	public Automato () {
 		transicao = new int[96][35];
 		estadosFinais = new HashMap<Integer, Token.TipoToken>();	
@@ -102,47 +109,93 @@ public class Automato {
 		transicao[0][Alfabeto.E.ordinal()] = 30;
 		transicao[0][Alfabeto.W.ordinal()] = 34;
 		transicao[0][Alfabeto.R.ordinal()] = 40;
+		//Conferir
+		transicao[0][Alfabeto.T.ordinal()] = 47;
+		transicao[0][Alfabeto.L.ordinal()] = 47;
+		transicao[0][Alfabeto.O.ordinal()] = 47;
+		transicao[0][Alfabeto.A.ordinal()] = 47;
+		transicao[0][Alfabeto.U.ordinal()] = 47;
+		transicao[0][Alfabeto.H.ordinal()] = 47;
+		transicao[0][Alfabeto.D.ordinal()] = 47;
 		transicao[0][Alfabeto.LETRA.ordinal()] = 47;
-		//Faltam algumas letras do alfabeto que "LETRA" não abrange
+		//EndConferir
 		transicao[1][Alfabeto.F.ordinal()] = 2;	
 		transicao[1][Alfabeto.N.ordinal()] = 4;
+		setTransicoesPra47(1);
 		transicao[2][Alfabeto.OUTRO.ordinal()] = 3;	
+		setTransicoesPra47(2);
 		transicao[4][Alfabeto.T.ordinal()] = 5;	
+		setTransicoesPra47(4);
 		transicao[5][Alfabeto.OUTRO.ordinal()] = 6;
+		setTransicoesPra47(5);
 		transicao[7][Alfabeto.L.ordinal()] = 8;
+		setTransicoesPra47(7);
 		transicao[8][Alfabeto.O.ordinal()] = 9;
+		setTransicoesPra47(8);
 		transicao[9][Alfabeto.A.ordinal()] = 10;
+		setTransicoesPra47(9);
 		transicao[10][Alfabeto.T.ordinal()] = 11;
+		setTransicoesPra47(10);
 		transicao[11][Alfabeto.OUTRO.ordinal()] = 12;
+		setTransicoesPra47(11);
 		transicao[13][Alfabeto.H.ordinal()] = 14;
+		setTransicoesPra47(13);
 		transicao[14][Alfabeto.A.ordinal()] = 15;
+		setTransicoesPra47(14);
 		transicao[15][Alfabeto.R.ordinal()] = 16;
+		setTransicoesPra47(15);
 		transicao[16][Alfabeto.OUTRO.ordinal()] = 17;
+		setTransicoesPra47(16);
 		transicao[18][Alfabeto.O.ordinal()] = 19;
+		setTransicoesPra47(18);
 		transicao[19][Alfabeto.I.ordinal()] = 20;
+		setTransicoesPra47(19);
 		transicao[20][Alfabeto.D.ordinal()] = 21;
+		setTransicoesPra47(20);
 		transicao[21][Alfabeto.OUTRO.ordinal()] = 22;
+		setTransicoesPra47(21);
 		transicao[23][Alfabeto.T.ordinal()] = 24;
+		setTransicoesPra47(23);
 		transicao[24][Alfabeto.R.ordinal()] = 25;
+		setTransicoesPra47(24);
 		transicao[25][Alfabeto.U.ordinal()] = 26;
+		setTransicoesPra47(25);
 		transicao[26][Alfabeto.C.ordinal()] = 27;
+		setTransicoesPra47(26);
 		transicao[27][Alfabeto.T.ordinal()] = 28;
+		setTransicoesPra47(27);
 		transicao[28][Alfabeto.OUTRO.ordinal()] = 29;
+		setTransicoesPra47(28);
 		transicao[30][Alfabeto.L.ordinal()] = 31;
+		setTransicoesPra47(30);
 		transicao[31][Alfabeto.S.ordinal()] = 32;
+		setTransicoesPra47(31);
 		transicao[32][Alfabeto.E.ordinal()] = 33;
+		setTransicoesPra47(32);
 		transicao[33][Alfabeto.OUTRO.ordinal()] = 95; //corrigir automato
+		setTransicoesPra47(33);
 		transicao[34][Alfabeto.H.ordinal()] = 35;
+		setTransicoesPra47(34);
 		transicao[35][Alfabeto.I.ordinal()] = 36;
+		setTransicoesPra47(35);
 		transicao[36][Alfabeto.L.ordinal()] = 37;
+		setTransicoesPra47(36);
 		transicao[37][Alfabeto.E.ordinal()] = 38;
+		setTransicoesPra47(37);
 		transicao[38][Alfabeto.OUTRO.ordinal()] = 39;
+		setTransicoesPra47(38);
 		transicao[40][Alfabeto.E.ordinal()] = 41;
+		setTransicoesPra47(40);
 		transicao[41][Alfabeto.T.ordinal()] = 42;
+		setTransicoesPra47(41);
 		transicao[42][Alfabeto.U.ordinal()] = 43;
+		setTransicoesPra47(42);
 		transicao[43][Alfabeto.R.ordinal()] = 44;
+		setTransicoesPra47(43);
 		transicao[44][Alfabeto.N.ordinal()] = 45;
-		transicao[45][Alfabeto.OUTRO.ordinal()] = 46;											
+		setTransicoesPra47(44);
+		transicao[45][Alfabeto.OUTRO.ordinal()] = 46;
+		setTransicoesPra47(45);											
 		
 		transicao[0][Alfabeto.MAIS.ordinal()] = 49;
 		transicao[0][Alfabeto.DIGITO.ordinal()] = 51;
@@ -163,6 +216,29 @@ public class Automato {
 		for(int i = 0; i < 35; i++){ //Qualquer caractere, revisar
 			transicao[49][i] = 50;
 			transicao[56][i] = 57;
+			transicao[58][i] = 59;
+			transicao[63][i] = 64;
+			transicao[66][i] = 67;
+			transicao[68][i] = 69;
+			transicao[70][i] = 73;
+			transicao[71][i] = 72;
+			transicao[74][i] = 75;
+			transicao[76][i] = 77;
+			transicao[79][i] = 80;
+			transicao[81][i] = 82;
+			transicao[83][i] = 84;
+			transicao[85][i] = 86;
+			transicao[87][i] = 88;
+			transicao[89][i] = 90;
+			transicao[91][i] = 92;
+			transicao[93][i] = 94;
+			if(i != Alfabeto.ASTERISCO.ordinal()){ //Conferir
+				transicao[60][i] = 65;
+				transicao[61][i] = 62;
+			}
+			if(i != Alfabeto.BARRA.ordinal()){
+				transicao[62][i] = 61;
+			}
 		}
 		transicao[51][Alfabeto.DIGITO.ordinal()] = 51;
 		for(int i = 0; i < 17; i++){ //Lê todas as letras
@@ -175,12 +251,13 @@ public class Automato {
 		transicao[53][Alfabeto.DIGITO.ordinal()] = 54;
 		transicao[54][Alfabeto.DIGITO.ordinal()] = 54;
 		transicao[54][Alfabeto.OUTRO.ordinal()] = 55;
-		transicao[58][Alfabeto.OUTRO.ordinal()] = 59; //Conferir
 		transicao[60][Alfabeto.ASTERISCO.ordinal()] = 61;
-		transicao[60][Alfabeto.OUTRO.ordinal()] = 65;
-		transicao[61][Alfabeto.DIGITO.ordinal()] = 62;
-		transicao[61][Alfabeto.OUTRO.ordinal()] = 62;
-		
+		transicao[62][Alfabeto.BARRA.ordinal()] = 63;
+		transicao[66][Alfabeto.IGUAL.ordinal()] = 68;
+		transicao[70][Alfabeto.IGUAL.ordinal()] = 71;
+		transicao[74][Alfabeto.IGUAL.ordinal()] = 76;
+		transicao[78][Alfabeto.IGUAL.ordinal()] = 79;
+		transicao[47][Alfabeto.OUTRO.ordinal()] = 48;
 	}
 	
 	private boolean isEstadoFinal(int proxEstado) {
