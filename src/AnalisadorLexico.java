@@ -30,13 +30,16 @@ public class AnalisadorLexico {
 			int numColuna = 0;
 			for(int i = 0; i < linha.length(); i++) {
 				numColuna++;
-				if(!Character.isWhitespace((linha.charAt(i)))) {
-					palavra += linha.charAt(i);
-				}
 				Token.TipoToken tipoToken = automato.executar(linha.charAt(i));
 				if(tipoToken != null) {
 					System.out.println(palavra);
-				}	
+					palavra = "";
+					i--; //para verificar o ultimo caracter da iteração que seria descartado
+				} else {
+					if(!Character.isWhitespace(linha.charAt(i))) {
+						palavra += linha.charAt(i);
+					}
+				}
 			}
 		}	
 	}
