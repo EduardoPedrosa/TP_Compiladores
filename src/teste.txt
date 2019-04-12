@@ -1,3 +1,7 @@
-if(2 > 3){
-	a = b
+while (2 > 3){
+	a = b;
+	c == b;
+	a > e;
+	abvd *a+b+c;
+	a1123;
 }

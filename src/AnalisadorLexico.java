@@ -26,15 +26,17 @@ public class AnalisadorLexico {
 		String palavra = "";
 		int numLinha = 0;
 		while((linha = arquivo.readLine()) != null) {
+			linha += " ";
 			++numLinha;
 			int numColuna = 0;
 			for(int i = 0; i < linha.length(); i++) {
 				numColuna++;
 				Token.TipoToken tipoToken = automato.executar(linha.charAt(i));
 				if(tipoToken != null) {
-					System.out.println(palavra);
+					System.out.println("<"+tipoToken+","+palavra+">");
 					palavra = "";
 					i--; //para verificar o ultimo caracter da iteração que seria descartado
+					numColuna--;
 				} else {
 					if(!Character.isWhitespace(linha.charAt(i))) {
 						palavra += linha.charAt(i);

@@ -12,12 +12,19 @@ public class Automato {
 
 	private final void setTransicoesPra47(int estado){
 		for(int i = 0; i < 18; i++){
-			transicao[estado][i] = 47;
+			if(transicao[estado][i] == 0){
+				transicao[estado][i] = 47;
+			}
 		}
 	}
 
 	public Automato () {
 		transicao = new int[96][35];
+		for(int i = 0; i < 96; i++){
+			for(int j = 0; j < 35; j++){
+				transicao[i][j] = 0;
+			}
+		}
 		estadosFinais = new HashMap<Integer, Token.TipoToken>();	
 		palavrasDoAlfabeto.put('a',Alfabeto.A);
 		palavrasDoAlfabeto.put('b',Alfabeto.LETRA);
@@ -74,7 +81,7 @@ public class Automato {
 		estadosFinais.put(3, Token.TipoToken.PAL);
 		estadosFinais.put(6, Token.TipoToken.PAL);
 		estadosFinais.put(12, Token.TipoToken.PAL);
-		estadosFinais.put(48, Token.TipoToken.PAL);
+		estadosFinais.put(48, Token.TipoToken.ID);
 		estadosFinais.put(17, Token.TipoToken.PAL);
 		estadosFinais.put(22, Token.TipoToken.PAL);
 		estadosFinais.put(29, Token.TipoToken.PAL);
@@ -136,9 +143,41 @@ public class Automato {
 			transicao[38][i] = 39;
 			transicao[45][i] = 46;
 			transicao[47][i] = 48;
+			transicao[51][i] = 52;
 			transicao[54][i] = 55;
 			transicao[54][i] = 55;
+			
+			transicao[1][i] = 48;
+			transicao[4][i] = 48;
+			transicao[7][i] = 48;
+			transicao[8][i] = 48;
+			transicao[9][i] = 48;
+			transicao[10][i] = 48;
+			transicao[13][i] = 48;
+			transicao[14][i] = 48;
+			transicao[15][i] = 48;
+			transicao[18][i] = 48;
+			transicao[19][i] = 48;
+			transicao[20][i] = 48;
+			transicao[23][i] = 48;
+			transicao[24][i] = 48;
+			transicao[25][i] = 48;
+			transicao[26][i] = 48;
+			transicao[27][i] = 48;
+			transicao[30][i] = 48;
+			transicao[31][i] = 48;
+			transicao[32][i] = 48;
+			transicao[34][i] = 48;
+			transicao[35][i] = 48;
+			transicao[36][i] = 48;
+			transicao[37][i] = 48;
+			transicao[40][i] = 48;
+			transicao[41][i] = 48;
+			transicao[42][i] = 48;
+			transicao[43][i] = 48;
+			transicao[44][i] = 48;
 		}
+		setTransicoesPra47(47);
 		setTransicoesPra47(2);
 		transicao[4][Alfabeto.T.ordinal()] = 5;	
 		setTransicoesPra47(4);
@@ -250,7 +289,6 @@ public class Automato {
 		}
 		transicao[51][Alfabeto.DIGITO.ordinal()] = 51;
 		for(int i = 0; i < 17; i++){ //Lê todas as letras
-			transicao[51][i] = 52;
 			transicao[54][i] = 52;
 			transicao[61][i] = 62;
 		}
