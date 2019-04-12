@@ -1,7 +1,10 @@
 import java.util.HashMap;
 
 public class Automato {
-	private enum Alfabeto{I,N,T,F,L,O,A,S,R,U,C,E,W,H,V,D,LETRA,DIGITO,AP,FP,ACH,FCH,ACO,FCO,IGUAL,MAIOR,MENOR,MAIS,MENOS,ASTERISCO,BARRA,PONTOVIRGULA,OUTRO,EXCLAMACAO,PONTO};
+	private enum Alfabeto{I,N,T,F,L,O,A,S,R,U,
+						  C,E,W,H,V,D,LETRA,DIGITO,AP,FP,
+						  ACH,FCH,ACO,FCO,IGUAL,MAIOR,MENOR,MAIS,MENOS,ASTERISCO,
+						  BARRA,PONTOVIRGULA,EXCLAMACAO,PONTO,OUTRO};
 	private int estadoAtual;
 	private int[][] transicao;
 	private HashMap<Integer,Token.TipoToken> estadosFinais;
@@ -122,11 +125,23 @@ public class Automato {
 		transicao[1][Alfabeto.F.ordinal()] = 2;	
 		transicao[1][Alfabeto.N.ordinal()] = 4;
 		setTransicoesPra47(1);
-		transicao[2][Alfabeto.OUTRO.ordinal()] = 3;	
+		for (int i = 18; i < 35; i++){ //Estado x lê outros caracteres vai pra estado w
+			transicao[2][i] = 3;
+			transicao[5][i] = 6;
+			transicao[11][i] = 12;
+			transicao[16][i] = 17;
+			transicao[21][i] = 22;
+			transicao[28][i] = 29;
+			transicao[33][i] = 95; //corrigir automato
+			transicao[38][i] = 39;
+			transicao[45][i] = 46;
+			transicao[47][i] = 48;
+			transicao[54][i] = 55;
+			transicao[54][i] = 55;
+		}
 		setTransicoesPra47(2);
 		transicao[4][Alfabeto.T.ordinal()] = 5;	
 		setTransicoesPra47(4);
-		transicao[5][Alfabeto.OUTRO.ordinal()] = 6;
 		setTransicoesPra47(5);
 		transicao[7][Alfabeto.L.ordinal()] = 8;
 		setTransicoesPra47(7);
@@ -136,7 +151,6 @@ public class Automato {
 		setTransicoesPra47(9);
 		transicao[10][Alfabeto.T.ordinal()] = 11;
 		setTransicoesPra47(10);
-		transicao[11][Alfabeto.OUTRO.ordinal()] = 12;
 		setTransicoesPra47(11);
 		transicao[13][Alfabeto.H.ordinal()] = 14;
 		setTransicoesPra47(13);
@@ -144,7 +158,6 @@ public class Automato {
 		setTransicoesPra47(14);
 		transicao[15][Alfabeto.R.ordinal()] = 16;
 		setTransicoesPra47(15);
-		transicao[16][Alfabeto.OUTRO.ordinal()] = 17;
 		setTransicoesPra47(16);
 		transicao[18][Alfabeto.O.ordinal()] = 19;
 		setTransicoesPra47(18);
@@ -152,7 +165,6 @@ public class Automato {
 		setTransicoesPra47(19);
 		transicao[20][Alfabeto.D.ordinal()] = 21;
 		setTransicoesPra47(20);
-		transicao[21][Alfabeto.OUTRO.ordinal()] = 22;
 		setTransicoesPra47(21);
 		transicao[23][Alfabeto.T.ordinal()] = 24;
 		setTransicoesPra47(23);
@@ -164,7 +176,6 @@ public class Automato {
 		setTransicoesPra47(26);
 		transicao[27][Alfabeto.T.ordinal()] = 28;
 		setTransicoesPra47(27);
-		transicao[28][Alfabeto.OUTRO.ordinal()] = 29;
 		setTransicoesPra47(28);
 		transicao[30][Alfabeto.L.ordinal()] = 31;
 		setTransicoesPra47(30);
@@ -172,7 +183,6 @@ public class Automato {
 		setTransicoesPra47(31);
 		transicao[32][Alfabeto.E.ordinal()] = 33;
 		setTransicoesPra47(32);
-		transicao[33][Alfabeto.OUTRO.ordinal()] = 95; //corrigir automato
 		setTransicoesPra47(33);
 		transicao[34][Alfabeto.H.ordinal()] = 35;
 		setTransicoesPra47(34);
@@ -182,7 +192,6 @@ public class Automato {
 		setTransicoesPra47(36);
 		transicao[37][Alfabeto.E.ordinal()] = 38;
 		setTransicoesPra47(37);
-		transicao[38][Alfabeto.OUTRO.ordinal()] = 39;
 		setTransicoesPra47(38);
 		transicao[40][Alfabeto.E.ordinal()] = 41;
 		setTransicoesPra47(40);
@@ -194,8 +203,7 @@ public class Automato {
 		setTransicoesPra47(43);
 		transicao[44][Alfabeto.N.ordinal()] = 45;
 		setTransicoesPra47(44);
-		transicao[45][Alfabeto.OUTRO.ordinal()] = 46;
-		setTransicoesPra47(45);											
+		setTransicoesPra47(45);
 		
 		transicao[0][Alfabeto.MAIS.ordinal()] = 49;
 		transicao[0][Alfabeto.DIGITO.ordinal()] = 51;
@@ -246,22 +254,19 @@ public class Automato {
 			transicao[54][i] = 52;
 			transicao[61][i] = 62;
 		}
-		transicao[51][Alfabeto.OUTRO.ordinal()] = 52;
 		transicao[51][Alfabeto.PONTO.ordinal()] = 53;
 		transicao[53][Alfabeto.DIGITO.ordinal()] = 54;
 		transicao[54][Alfabeto.DIGITO.ordinal()] = 54;
-		transicao[54][Alfabeto.OUTRO.ordinal()] = 55;
 		transicao[60][Alfabeto.ASTERISCO.ordinal()] = 61;
 		transicao[62][Alfabeto.BARRA.ordinal()] = 63;
 		transicao[66][Alfabeto.IGUAL.ordinal()] = 68;
 		transicao[70][Alfabeto.IGUAL.ordinal()] = 71;
 		transicao[74][Alfabeto.IGUAL.ordinal()] = 76;
 		transicao[78][Alfabeto.IGUAL.ordinal()] = 79;
-		transicao[47][Alfabeto.OUTRO.ordinal()] = 48;
 	}
-	
+
 	private boolean isEstadoFinal(int proxEstado) {
-		return estadosFinais.containsKey(proxEstado);	
+		return estadosFinais.containsKey(proxEstado);
 	}
 	
 	public Token.TipoToken executar(char c) {
