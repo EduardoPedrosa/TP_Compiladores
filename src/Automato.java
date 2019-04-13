@@ -76,6 +76,7 @@ public class Automato {
 		palavrasDoAlfabeto.put('-',Alfabeto.MENOS);
 		palavrasDoAlfabeto.put('*',Alfabeto.ASTERISCO);
 		palavrasDoAlfabeto.put('/',Alfabeto.BARRA);
+		palavrasDoAlfabeto.put('.',Alfabeto.PONTO);
 		estadoAtual = 0;
 		
 		estadosFinais.put(3, Token.TipoToken.PAL);
@@ -144,7 +145,6 @@ public class Automato {
 			transicao[45][i] = 46;
 			transicao[47][i] = 48;
 			transicao[51][i] = 52;
-			transicao[54][i] = 55;
 			transicao[54][i] = 55;
 			
 			transicao[1][i] = 48;
@@ -283,7 +283,7 @@ public class Automato {
 				transicao[60][i] = 65;
 				transicao[61][i] = 61;
 			}
-			if(i != Alfabeto.BARRA.ordinal()){
+			if(i != Alfabeto.BARRA.ordinal()) {
 				transicao[62][i] = 61;
 			}
 		}

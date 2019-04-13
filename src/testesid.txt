@@ -1,4 +1,0 @@
-if eu
-    bc 
-else 
-    ab
