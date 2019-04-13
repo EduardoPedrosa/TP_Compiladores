@@ -105,7 +105,7 @@ public class Automato {
 		estadosFinais.put(80, Token.TipoToken.OPCOMP);	
 		estadosFinais.put(82, Token.TipoToken.DELIM);	
 		estadosFinais.put(84, Token.TipoToken.DELIM);	
-		estadosFinais.put(86, Token.TipoToken.DELIM);	
+		estadosFinais.put(86, Token.TipoToken.DELIM);
 		estadosFinais.put(88, Token.TipoToken.DELIM);	
 		estadosFinais.put(90, Token.TipoToken.DELIM);	
 		estadosFinais.put(92, Token.TipoToken.DELIM);	
@@ -281,7 +281,7 @@ public class Automato {
 			transicao[93][i] = 94;
 			if(i != Alfabeto.ASTERISCO.ordinal()){ //Conferir
 				transicao[60][i] = 65;
-				transicao[61][i] = 62;
+				transicao[61][i] = 61;
 			}
 			if(i != Alfabeto.BARRA.ordinal()){
 				transicao[62][i] = 61;
@@ -296,6 +296,7 @@ public class Automato {
 		transicao[53][Alfabeto.DIGITO.ordinal()] = 54;
 		transicao[54][Alfabeto.DIGITO.ordinal()] = 54;
 		transicao[60][Alfabeto.ASTERISCO.ordinal()] = 61;
+		transicao[61][Alfabeto.ASTERISCO.ordinal()] = 62;
 		transicao[62][Alfabeto.BARRA.ordinal()] = 63;
 		transicao[66][Alfabeto.IGUAL.ordinal()] = 68;
 		transicao[70][Alfabeto.IGUAL.ordinal()] = 71;

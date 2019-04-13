@@ -1,11 +1,15 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class AnalisadorLexico {
 	private enum Palavras{INT, FLOAT, STRUCT, IF, ELSE, WHILE, VOID, RETURN};
 	private HashMap<String, Palavras> palavrasReservadas = new HashMap<String,Palavras>();
 	private Automato automato;
+	private List<Token> tokens;
+
 	public AnalisadorLexico() {
 		automato = new Automato();
 		palavrasReservadas.put("int",Palavras.INT);
@@ -16,9 +20,7 @@ public class AnalisadorLexico {
 		palavrasReservadas.put("while",Palavras.WHILE);
 		palavrasReservadas.put("void",Palavras.VOID);
 		palavrasReservadas.put("return",Palavras.RETURN);
-		
-		
-		
+		tokens = new ArrayList<Token>();
 	}
 	
 	public void Analisar(BufferedReader arquivo) throws IOException{
@@ -32,17 +34,39 @@ public class AnalisadorLexico {
 			for(int i = 0; i < linha.length(); i++) {
 				numColuna++;
 				Token.TipoToken tipoToken = automato.executar(linha.charAt(i));
-				if(tipoToken != null) {
-					System.out.println("<"+tipoToken+","+palavra+">");
+				if (tipoToken != null) {
+					// INSERINDO NA TABELA DE SIMBOLOS CASO FOR IDENTIFICADOR OU CONSTANTE
+					int indiceTS = -1;
+					if (tipoToken != Token.TipoToken.OPCOMENT) { //SE NAO FOR COMENTARIO, SEGUIR EM FRENTE, SE FOR, APENAS IGNORAR
+						if (tipoToken == Token.TipoToken.ID) {
+							TabelaDeSimbolos ts = TabelaDeSimbolos.getTabela();
+							indiceTS = ts.inserirOuEncontrarNovoSimbolo(palavra, CategoriaSimbolo.IDENTIFICADOR);
+						} else if ((tipoToken == Token.TipoToken.NUM) || (tipoToken == Token.TipoToken.NUMFLOAT) ||
+								tipoToken == Token.TipoToken.CAD) {
+							TabelaDeSimbolos ts = TabelaDeSimbolos.getTabela();
+							indiceTS = ts.inserirOuEncontrarNovoSimbolo(palavra, CategoriaSimbolo.CONSTANTE);
+						}
+						//CRIANDO TOKEN
+						Token novoToken;
+						if (indiceTS != -1)
+							novoToken = new Token(tipoToken, palavra, indiceTS);
+						else
+							novoToken = new Token(tipoToken, palavra);
+						tokens.add(novoToken);
+					}
 					palavra = "";
 					i--; //para verificar o ultimo caracter da iteração que seria descartado
 					numColuna--;
 				} else {
-					if(!Character.isWhitespace(linha.charAt(i))) {
+					if (!Character.isWhitespace(linha.charAt(i))) {
 						palavra += linha.charAt(i);
 					}
 				}
 			}
-		}	
+		}
+		//IMPRIMINDO TOKENS
+		for (Token t : tokens){
+			System.out.println(t);
+		}
 	}
 }
