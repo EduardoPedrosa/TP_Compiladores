@@ -35,28 +35,32 @@ public class AnalisadorLexico {
 				numColuna++;
 				Token.TipoToken tipoToken = automato.executar(linha.charAt(i));
 				if (tipoToken != null) {
-					// INSERINDO NA TABELA DE SIMBOLOS CASO FOR IDENTIFICADOR OU CONSTANTE
-					int indiceTS = -1;
-					if (tipoToken != Token.TipoToken.OPCOMENT) { //SE NAO FOR COMENTARIO, SEGUIR EM FRENTE, SE FOR, APENAS IGNORAR
-						if (tipoToken == Token.TipoToken.ID) {
-							TabelaDeSimbolos ts = TabelaDeSimbolos.getTabela();
-							indiceTS = ts.inserirOuEncontrarNovoSimbolo(palavra, CategoriaSimbolo.IDENTIFICADOR);
-						} else if ((tipoToken == Token.TipoToken.NUM) || (tipoToken == Token.TipoToken.NUMFLOAT) ||
-								tipoToken == Token.TipoToken.CAD) {
-							TabelaDeSimbolos ts = TabelaDeSimbolos.getTabela();
-							indiceTS = ts.inserirOuEncontrarNovoSimbolo(palavra, CategoriaSimbolo.CONSTANTE);
+					if(tipoToken == Token.TipoToken.ERROR){
+						System.out.println("Panic mode na linha " + numLinha + " e coluna" + numColuna);
+					} else {
+						// INSERINDO NA TABELA DE SIMBOLOS CASO FOR IDENTIFICADOR OU CONSTANTE
+						int indiceTS = -1;
+						if (tipoToken != Token.TipoToken.OPCOMENT) { //SE NAO FOR COMENTARIO, SEGUIR EM FRENTE, SE FOR, APENAS IGNORAR
+							if (tipoToken == Token.TipoToken.ID) {
+								TabelaDeSimbolos ts = TabelaDeSimbolos.getTabela();
+								indiceTS = ts.inserirOuEncontrarNovoSimbolo(palavra, CategoriaSimbolo.IDENTIFICADOR);
+							} else if ((tipoToken == Token.TipoToken.NUM) || (tipoToken == Token.TipoToken.NUMFLOAT) ||
+									tipoToken == Token.TipoToken.CAD) {
+								TabelaDeSimbolos ts = TabelaDeSimbolos.getTabela();
+								indiceTS = ts.inserirOuEncontrarNovoSimbolo(palavra, CategoriaSimbolo.CONSTANTE);
+							}
+							//CRIANDO TOKEN
+							Token novoToken;
+							if (indiceTS != -1)
+								novoToken = new Token(tipoToken, palavra, indiceTS);
+							else
+								novoToken = new Token(tipoToken, palavra);
+							tokens.add(novoToken);
 						}
-						//CRIANDO TOKEN
-						Token novoToken;
-						if (indiceTS != -1)
-							novoToken = new Token(tipoToken, palavra, indiceTS);
-						else
-							novoToken = new Token(tipoToken, palavra);
-						tokens.add(novoToken);
+						palavra = "";
+						i--; //para verificar o ultimo caracter da iteração que seria descartado
+						numColuna--;
 					}
-					palavra = "";
-					i--; //para verificar o ultimo caracter da iteração que seria descartado
-					numColuna--;
 				} else {
 					if (!Character.isWhitespace(linha.charAt(i))) {
 						palavra += linha.charAt(i);

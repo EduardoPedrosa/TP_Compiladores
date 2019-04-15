@@ -77,6 +77,9 @@ public class Automato {
 		palavrasDoAlfabeto.put('*',Alfabeto.ASTERISCO);
 		palavrasDoAlfabeto.put('/',Alfabeto.BARRA);
 		palavrasDoAlfabeto.put('.',Alfabeto.PONTO);
+		palavrasDoAlfabeto.put(' ',Alfabeto.OUTRO);
+		palavrasDoAlfabeto.put('\n',Alfabeto.OUTRO);
+		palavrasDoAlfabeto.put('\t',Alfabeto.OUTRO);
 		estadoAtual = 0;
 		
 		estadosFinais.put(3, Token.TipoToken.PAL);
@@ -311,7 +314,9 @@ public class Automato {
 	public Token.TipoToken executar(char c) {
 		Alfabeto palavraAlfabeto = palavrasDoAlfabeto.get(c);
 		if(palavraAlfabeto == null) {
-			palavraAlfabeto = Alfabeto.OUTRO;
+			if(estadoAtual != 61){ //ignorando o conteudo dos comentarios  - ERRO PORQUE PRECISA PASSAR PRO PROXIMO ESTADO OU ALGO DO TIPO
+				return Token.TipoToken.ERROR;
+			}
 		}
 		int idCar = palavraAlfabeto.ordinal();
 		int proxEstado = transicao[estadoAtual][idCar];
