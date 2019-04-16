@@ -4,7 +4,7 @@ public class Automato {
 	private enum Alfabeto{I,N,T,F,L,O,A,S,R,U,
 						  C,E,W,H,V,D,LETRA,DIGITO,AP,FP,
 						  ACH,FCH,ACO,FCO,IGUAL,MAIOR,MENOR,MAIS,MENOS,ASTERISCO,
-						  BARRA,PONTOVIRGULA,EXCLAMACAO,PONTO,OUTRO};
+						  BARRA,PONTOVIRGULA,EXCLAMACAO,PONTO,OUTRO,ASPAS};
 	private int estadoAtual;
 	private int[][] transicao;
 	private HashMap<Integer,Token.TipoToken> estadosFinais;
@@ -12,16 +12,17 @@ public class Automato {
 
 	private final void setTransicoesPra47(int estado){
 		for(int i = 0; i < 18; i++){
-			if(transicao[estado][i] == 0){
+			if(transicao[estado][i] == -1){
 				transicao[estado][i] = 47;
 			}
 		}
 	}
 
 	public Automato () {
-		transicao = new int[96][35];
-		for(int i = 0; i < 96; i++){
-			for(int j = 0; j < 35; j++){
+
+		transicao = new int[100][36];
+		for(int i = 0; i < 100; i++){
+			for(int j = 0; j < 36; j++){
 				transicao[i][j] = -1;
 			}
 		}
@@ -77,6 +78,7 @@ public class Automato {
 		palavrasDoAlfabeto.put('*',Alfabeto.ASTERISCO);
 		palavrasDoAlfabeto.put('/',Alfabeto.BARRA);
 		palavrasDoAlfabeto.put('.',Alfabeto.PONTO);
+		palavrasDoAlfabeto.put('\'',Alfabeto.ASPAS);
 		palavrasDoAlfabeto.put(' ',Alfabeto.OUTRO);
 		palavrasDoAlfabeto.put('\n',Alfabeto.OUTRO);
 		palavrasDoAlfabeto.put('\t',Alfabeto.OUTRO);
@@ -114,6 +116,7 @@ public class Automato {
 		estadosFinais.put(90, Token.TipoToken.DELIM);	
 		estadosFinais.put(92, Token.TipoToken.DELIM);	
 		estadosFinais.put(94, Token.TipoToken.DELIM);
+		estadosFinais.put(99, Token.TipoToken.CAR);
 		
 		transicao[0][Alfabeto.I.ordinal()] = 1;
 		transicao[0][Alfabeto.F.ordinal()] = 7;
@@ -136,20 +139,20 @@ public class Automato {
 		transicao[1][Alfabeto.F.ordinal()] = 2;	
 		transicao[1][Alfabeto.N.ordinal()] = 4;
 		setTransicoesPra47(1);
-		for (int i = 18; i < 35; i++){ //Estado x lê outros caracteres vai pra estado w
+		for (int i = 18; i < 36; i++){ //Estado x lê outros caracteres vai pra estado w
 			transicao[2][i] = 3;
 			transicao[5][i] = 6;
 			transicao[11][i] = 12;
 			transicao[16][i] = 17;
 			transicao[21][i] = 22;
 			transicao[28][i] = 29;
-			transicao[33][i] = 95; //corrigir automato
+			transicao[33][i] = 95;
 			transicao[38][i] = 39;
 			transicao[45][i] = 46;
 			transicao[47][i] = 48;
 			transicao[51][i] = 52;
 			transicao[54][i] = 55;
-			
+
 			transicao[1][i] = 48;
 			transicao[4][i] = 48;
 			transicao[7][i] = 48;
@@ -263,7 +266,8 @@ public class Automato {
 		transicao[0][Alfabeto.FCO.ordinal()] = 89;
 		transicao[0][Alfabeto.AP.ordinal()] = 91;
 		transicao[0][Alfabeto.FP.ordinal()] = 93;
-		for(int i = 0; i < 35; i++){ //Qualquer caractere, revisar
+		transicao[0][Alfabeto.ASPAS.ordinal()] = 96;
+		for(int i = 0; i < 36; i++){ //Qualquer caractere, revisar
 			transicao[49][i] = 50;
 			transicao[56][i] = 57;
 			transicao[58][i] = 59;
@@ -272,6 +276,7 @@ public class Automato {
 			transicao[68][i] = 69;
 			transicao[70][i] = 73;
 			transicao[71][i] = 72;
+			transicao[98][i] = 99;
 			transicao[74][i] = 75;
 			transicao[76][i] = 77;
 			transicao[79][i] = 80;
@@ -289,12 +294,17 @@ public class Automato {
 			if(i != Alfabeto.BARRA.ordinal()) {
 				transicao[62][i] = 61;
 			}
+			if(i != Alfabeto.ASPAS.ordinal()){
+				transicao[96][i] = 97;
+			}
 		}
 		transicao[51][Alfabeto.DIGITO.ordinal()] = 51;
 		for(int i = 0; i < 17; i++){ //Lê todas as letras
 			transicao[54][i] = 52;
 			transicao[61][i] = 62;
 		}
+		transicao[96][Alfabeto.ASPAS.ordinal()] = 98;
+		transicao[97][Alfabeto.ASPAS.ordinal()] = 98;
 		transicao[51][Alfabeto.PONTO.ordinal()] = 53;
 		transicao[53][Alfabeto.DIGITO.ordinal()] = 54;
 		transicao[54][Alfabeto.DIGITO.ordinal()] = 54;
@@ -313,6 +323,7 @@ public class Automato {
 	
 	public Token.TipoToken executar(char c) {
 		Alfabeto palavraAlfabeto = palavrasDoAlfabeto.get(c);
+		System.out.println("pal: "+palavraAlfabeto);
 		if(palavraAlfabeto == null) {
 			if(estadoAtual != 61){ //ignorando o conteudo dos comentarios
 				return Token.TipoToken.PANIC;
@@ -320,8 +331,16 @@ public class Automato {
 				palavraAlfabeto = Alfabeto.OUTRO;
 			}
 		}
+		System.out.println("pal: "+palavraAlfabeto);
 		int idCar = palavraAlfabeto.ordinal();
+		System.out.println(idCar + "/////" + estadoAtual);
 		int proxEstado = transicao[estadoAtual][idCar];
+		System.out.println(proxEstado);
+		if(isEstadoFinal(proxEstado)) {
+			estadoAtual = 0;
+			return estadosFinais.get(proxEstado);
+		}
+
 		if(proxEstado == -1){
 			if(!Character.isWhitespace(c)){
 				return Token.TipoToken.ERROR;
@@ -329,10 +348,7 @@ public class Automato {
 				proxEstado = 0;
 			}
 		}
-		if(isEstadoFinal(proxEstado)) {
-			estadoAtual = 0;
-			return estadosFinais.get(proxEstado);
-		}
+
 		estadoAtual = proxEstado;
 		return null;
 	}

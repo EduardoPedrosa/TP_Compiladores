@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class AnalisadorLexico {
-	private enum Palavras{INT, FLOAT, STRUCT, IF, ELSE, WHILE, VOID, RETURN};
+	private enum Palavras{INT, FLOAT, CHAR, STRUCT, IF, ELSE, WHILE, VOID, RETURN};
 	private HashMap<String, Palavras> palavrasReservadas = new HashMap<String,Palavras>();
 	private Automato automato;
 	private List<Token> tokens;
@@ -47,7 +47,7 @@ public class AnalisadorLexico {
 								TabelaDeSimbolos ts = TabelaDeSimbolos.getTabela();
 								indiceTS = ts.inserirOuEncontrarNovoSimbolo(palavra, CategoriaSimbolo.IDENTIFICADOR);
 							} else if ((tipoToken == Token.TipoToken.NUM) || (tipoToken == Token.TipoToken.NUMFLOAT) ||
-									tipoToken == Token.TipoToken.CAD) {
+									tipoToken == Token.TipoToken.CAR) {
 								TabelaDeSimbolos ts = TabelaDeSimbolos.getTabela();
 								indiceTS = ts.inserirOuEncontrarNovoSimbolo(palavra, CategoriaSimbolo.CONSTANTE);
 							}
