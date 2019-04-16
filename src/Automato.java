@@ -323,7 +323,6 @@ public class Automato {
 	
 	public Token.TipoToken executar(char c) {
 		Alfabeto palavraAlfabeto = palavrasDoAlfabeto.get(c);
-		System.out.println("pal: "+palavraAlfabeto);
 		if(palavraAlfabeto == null) {
 			if(estadoAtual != 61){ //ignorando o conteudo dos comentarios
 				return Token.TipoToken.PANIC;
@@ -331,11 +330,8 @@ public class Automato {
 				palavraAlfabeto = Alfabeto.OUTRO;
 			}
 		}
-		System.out.println("pal: "+palavraAlfabeto);
 		int idCar = palavraAlfabeto.ordinal();
-		System.out.println(idCar + "/////" + estadoAtual);
 		int proxEstado = transicao[estadoAtual][idCar];
-		System.out.println(proxEstado);
 		if(isEstadoFinal(proxEstado)) {
 			estadoAtual = 0;
 			return estadosFinais.get(proxEstado);
