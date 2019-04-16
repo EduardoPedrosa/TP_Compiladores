@@ -1,9 +1,0 @@
-while (2 > 3.304){
-	a = b; 
-	c == @b@@; /* ISTO É UM COMENTARIO */
-	a > e;
-	abvd *a+b+c;
-	a1123;
-	char caract = 'a';
-	caract = 'b';
-}
