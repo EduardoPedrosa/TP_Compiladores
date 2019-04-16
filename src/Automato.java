@@ -22,7 +22,7 @@ public class Automato {
 		transicao = new int[96][35];
 		for(int i = 0; i < 96; i++){
 			for(int j = 0; j < 35; j++){
-				transicao[i][j] = 0;
+				transicao[i][j] = -1;
 			}
 		}
 		estadosFinais = new HashMap<Integer, Token.TipoToken>();	
@@ -314,12 +314,21 @@ public class Automato {
 	public Token.TipoToken executar(char c) {
 		Alfabeto palavraAlfabeto = palavrasDoAlfabeto.get(c);
 		if(palavraAlfabeto == null) {
-			if(estadoAtual != 61){ //ignorando o conteudo dos comentarios  - ERRO PORQUE PRECISA PASSAR PRO PROXIMO ESTADO OU ALGO DO TIPO
-				return Token.TipoToken.ERROR;
+			if(estadoAtual != 61){ //ignorando o conteudo dos comentarios
+				return Token.TipoToken.PANIC;
+			} else {
+				palavraAlfabeto = Alfabeto.OUTRO;
 			}
 		}
 		int idCar = palavraAlfabeto.ordinal();
 		int proxEstado = transicao[estadoAtual][idCar];
+		if(proxEstado == -1){
+			if(!Character.isWhitespace(c)){
+				return Token.TipoToken.ERROR;
+			} else {
+				proxEstado = 0;
+			}
+		}
 		if(isEstadoFinal(proxEstado)) {
 			estadoAtual = 0;
 			return estadosFinais.get(proxEstado);

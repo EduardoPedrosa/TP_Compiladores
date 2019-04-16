@@ -35,8 +35,10 @@ public class AnalisadorLexico {
 				numColuna++;
 				Token.TipoToken tipoToken = automato.executar(linha.charAt(i));
 				if (tipoToken != null) {
-					if(tipoToken == Token.TipoToken.ERROR){
-						System.out.println("Panic mode na linha " + numLinha + " e coluna" + numColuna);
+					if(tipoToken == Token.TipoToken.PANIC){
+						System.out.println("Erro lexico na linha " + numLinha + " e coluna " + numColuna + " - tratado com panic mode");
+					} else if(tipoToken == Token.TipoToken.ERROR){
+						System.out.println("Erro lexico na linha " + numLinha + " e coluna " + numColuna);
 					} else {
 						// INSERINDO NA TABELA DE SIMBOLOS CASO FOR IDENTIFICADOR OU CONSTANTE
 						int indiceTS = -1;

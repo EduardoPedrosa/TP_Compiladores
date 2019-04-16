@@ -1,6 +1,6 @@
 
 public class Token {
-	public static enum TipoToken{ID,NUM,NUMFLOAT,CAD,OPAR,OPCOMP,OPCOMENT,DELIM,PAL,ATRIB,ERROR};
+	public static enum TipoToken{ID,NUM,NUMFLOAT,CAD,OPAR,OPCOMP,OPCOMENT,DELIM,PAL,ATRIB,ERROR, PANIC};
 	private TipoToken tipo;
 	private String valor;
 	private int indiceTS;
