@@ -36,7 +36,7 @@ public class AnalisadorLexico {
 				Token.TipoToken tipoToken = automato.executar(linha.charAt(i));
 				if (tipoToken != null) {
 					if(tipoToken == Token.TipoToken.PANIC){
-						System.out.println("Erro lexico na linha " + numLinha + " e coluna " + numColuna + " - tratado com panic mode");
+						System.out.println("Warning - linha " + numLinha + " e coluna " + numColuna + " - tratado com panic mode");
 					} else if(tipoToken == Token.TipoToken.ERROR){
 						System.out.println("Erro lexico na linha " + numLinha + " e coluna " + numColuna);
 					} else {

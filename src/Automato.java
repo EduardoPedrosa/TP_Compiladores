@@ -19,7 +19,7 @@ public class Automato {
 	}
 
 	public Automato () {
-
+		estadoAtual = 0;
 		transicao = new int[100][36];
 		for(int i = 0; i < 100; i++){
 			for(int j = 0; j < 36; j++){
@@ -82,7 +82,6 @@ public class Automato {
 		palavrasDoAlfabeto.put(' ',Alfabeto.OUTRO);
 		palavrasDoAlfabeto.put('\n',Alfabeto.OUTRO);
 		palavrasDoAlfabeto.put('\t',Alfabeto.OUTRO);
-		estadoAtual = 0;
 		
 		estadosFinais.put(3, Token.TipoToken.PAL);
 		estadosFinais.put(6, Token.TipoToken.PAL);
@@ -118,27 +117,6 @@ public class Automato {
 		estadosFinais.put(94, Token.TipoToken.DELIM);
 		estadosFinais.put(99, Token.TipoToken.CAR);
 		
-		transicao[0][Alfabeto.I.ordinal()] = 1;
-		transicao[0][Alfabeto.F.ordinal()] = 7;
-		transicao[0][Alfabeto.C.ordinal()] = 13;
-		transicao[0][Alfabeto.V.ordinal()] = 18;
-		transicao[0][Alfabeto.S.ordinal()] = 23;
-		transicao[0][Alfabeto.E.ordinal()] = 30;
-		transicao[0][Alfabeto.W.ordinal()] = 34;
-		transicao[0][Alfabeto.R.ordinal()] = 40;
-		//Conferir
-		transicao[0][Alfabeto.T.ordinal()] = 47;
-		transicao[0][Alfabeto.L.ordinal()] = 47;
-		transicao[0][Alfabeto.O.ordinal()] = 47;
-		transicao[0][Alfabeto.A.ordinal()] = 47;
-		transicao[0][Alfabeto.U.ordinal()] = 47;
-		transicao[0][Alfabeto.H.ordinal()] = 47;
-		transicao[0][Alfabeto.D.ordinal()] = 47;
-		transicao[0][Alfabeto.LETRA.ordinal()] = 47;
-		//EndConferir
-		transicao[1][Alfabeto.F.ordinal()] = 2;	
-		transicao[1][Alfabeto.N.ordinal()] = 4;
-		setTransicoesPra47(1);
 		for (int i = 18; i < 36; i++){ //Estado x lê outros caracteres vai pra estado w
 			transicao[2][i] = 3;
 			transicao[5][i] = 6;
@@ -152,7 +130,6 @@ public class Automato {
 			transicao[47][i] = 48;
 			transicao[51][i] = 52;
 			transicao[54][i] = 55;
-
 			transicao[1][i] = 48;
 			transicao[4][i] = 48;
 			transicao[7][i] = 48;
@@ -183,91 +160,7 @@ public class Automato {
 			transicao[43][i] = 48;
 			transicao[44][i] = 48;
 		}
-		setTransicoesPra47(47);
-		setTransicoesPra47(2);
-		transicao[4][Alfabeto.T.ordinal()] = 5;	
-		setTransicoesPra47(4);
-		setTransicoesPra47(5);
-		transicao[7][Alfabeto.L.ordinal()] = 8;
-		setTransicoesPra47(7);
-		transicao[8][Alfabeto.O.ordinal()] = 9;
-		setTransicoesPra47(8);
-		transicao[9][Alfabeto.A.ordinal()] = 10;
-		setTransicoesPra47(9);
-		transicao[10][Alfabeto.T.ordinal()] = 11;
-		setTransicoesPra47(10);
-		setTransicoesPra47(11);
-		transicao[13][Alfabeto.H.ordinal()] = 14;
-		setTransicoesPra47(13);
-		transicao[14][Alfabeto.A.ordinal()] = 15;
-		setTransicoesPra47(14);
-		transicao[15][Alfabeto.R.ordinal()] = 16;
-		setTransicoesPra47(15);
-		setTransicoesPra47(16);
-		transicao[18][Alfabeto.O.ordinal()] = 19;
-		setTransicoesPra47(18);
-		transicao[19][Alfabeto.I.ordinal()] = 20;
-		setTransicoesPra47(19);
-		transicao[20][Alfabeto.D.ordinal()] = 21;
-		setTransicoesPra47(20);
-		setTransicoesPra47(21);
-		transicao[23][Alfabeto.T.ordinal()] = 24;
-		setTransicoesPra47(23);
-		transicao[24][Alfabeto.R.ordinal()] = 25;
-		setTransicoesPra47(24);
-		transicao[25][Alfabeto.U.ordinal()] = 26;
-		setTransicoesPra47(25);
-		transicao[26][Alfabeto.C.ordinal()] = 27;
-		setTransicoesPra47(26);
-		transicao[27][Alfabeto.T.ordinal()] = 28;
-		setTransicoesPra47(27);
-		setTransicoesPra47(28);
-		transicao[30][Alfabeto.L.ordinal()] = 31;
-		setTransicoesPra47(30);
-		transicao[31][Alfabeto.S.ordinal()] = 32;
-		setTransicoesPra47(31);
-		transicao[32][Alfabeto.E.ordinal()] = 33;
-		setTransicoesPra47(32);
-		setTransicoesPra47(33);
-		transicao[34][Alfabeto.H.ordinal()] = 35;
-		setTransicoesPra47(34);
-		transicao[35][Alfabeto.I.ordinal()] = 36;
-		setTransicoesPra47(35);
-		transicao[36][Alfabeto.L.ordinal()] = 37;
-		setTransicoesPra47(36);
-		transicao[37][Alfabeto.E.ordinal()] = 38;
-		setTransicoesPra47(37);
-		setTransicoesPra47(38);
-		transicao[40][Alfabeto.E.ordinal()] = 41;
-		setTransicoesPra47(40);
-		transicao[41][Alfabeto.T.ordinal()] = 42;
-		setTransicoesPra47(41);
-		transicao[42][Alfabeto.U.ordinal()] = 43;
-		setTransicoesPra47(42);
-		transicao[43][Alfabeto.R.ordinal()] = 44;
-		setTransicoesPra47(43);
-		transicao[44][Alfabeto.N.ordinal()] = 45;
-		setTransicoesPra47(44);
-		setTransicoesPra47(45);
-		
-		transicao[0][Alfabeto.MAIS.ordinal()] = 49;
-		transicao[0][Alfabeto.DIGITO.ordinal()] = 51;
-		transicao[0][Alfabeto.MENOS.ordinal()] = 56;
-		transicao[0][Alfabeto.ASTERISCO.ordinal()] = 58;
-		transicao[0][Alfabeto.BARRA.ordinal()] = 60;
-		transicao[0][Alfabeto.MENOR.ordinal()] = 66;
-		transicao[0][Alfabeto.MAIOR.ordinal()] = 70;
-		transicao[0][Alfabeto.IGUAL.ordinal()] = 74;
-		transicao[0][Alfabeto.EXCLAMACAO.ordinal()] = 78;
-		transicao[0][Alfabeto.PONTOVIRGULA.ordinal()] = 81;
-		transicao[0][Alfabeto.ACH.ordinal()] = 83;
-		transicao[0][Alfabeto.FCH.ordinal()] = 85;
-		transicao[0][Alfabeto.ACO.ordinal()] = 87;
-		transicao[0][Alfabeto.FCO.ordinal()] = 89;
-		transicao[0][Alfabeto.AP.ordinal()] = 91;
-		transicao[0][Alfabeto.FP.ordinal()] = 93;
-		transicao[0][Alfabeto.ASPAS.ordinal()] = 96;
-		for(int i = 0; i < 36; i++){ //Qualquer caractere, revisar
+                for(int i = 0; i < 36; i++){ //Qualquer caractere, revisar
 			transicao[49][i] = 50;
 			transicao[56][i] = 57;
 			transicao[58][i] = 59;
@@ -298,11 +191,118 @@ public class Automato {
 				transicao[96][i] = 97;
 			}
 		}
-		transicao[51][Alfabeto.DIGITO.ordinal()] = 51;
-		for(int i = 0; i < 17; i++){ //Lê todas as letras
+                for(int i = 0; i < 17; i++){ //Lê todas as letras
 			transicao[54][i] = 52;
 			transicao[61][i] = 62;
 		}
+                
+		setTransicoesPra47(1);
+		setTransicoesPra47(47);
+		setTransicoesPra47(2);
+		setTransicoesPra47(4);
+		setTransicoesPra47(5);
+		setTransicoesPra47(7);
+		setTransicoesPra47(8);
+		setTransicoesPra47(9);
+		setTransicoesPra47(10);
+		setTransicoesPra47(11);
+		setTransicoesPra47(13);
+		setTransicoesPra47(14);
+		setTransicoesPra47(15);
+		setTransicoesPra47(16);
+		setTransicoesPra47(18);
+		setTransicoesPra47(19);
+		setTransicoesPra47(20);
+		setTransicoesPra47(21);
+		setTransicoesPra47(23);
+		setTransicoesPra47(24);
+		setTransicoesPra47(25);
+		setTransicoesPra47(26);
+		setTransicoesPra47(27);
+		setTransicoesPra47(28);
+		setTransicoesPra47(30);
+		setTransicoesPra47(31);
+		setTransicoesPra47(32);
+		setTransicoesPra47(33);
+		setTransicoesPra47(34);
+		setTransicoesPra47(35);
+		setTransicoesPra47(36);
+		setTransicoesPra47(37);
+		setTransicoesPra47(38);
+		setTransicoesPra47(40);
+		setTransicoesPra47(41);
+		setTransicoesPra47(42);
+		setTransicoesPra47(43);
+		setTransicoesPra47(44);
+		setTransicoesPra47(45);
+                
+                transicao[0][Alfabeto.I.ordinal()] = 1;
+		transicao[0][Alfabeto.F.ordinal()] = 7;
+		transicao[0][Alfabeto.C.ordinal()] = 13;
+		transicao[0][Alfabeto.V.ordinal()] = 18;
+		transicao[0][Alfabeto.S.ordinal()] = 23;
+		transicao[0][Alfabeto.E.ordinal()] = 30;
+		transicao[0][Alfabeto.W.ordinal()] = 34;
+		transicao[0][Alfabeto.R.ordinal()] = 40;
+		transicao[0][Alfabeto.T.ordinal()] = 47;
+		transicao[0][Alfabeto.L.ordinal()] = 47;
+		transicao[0][Alfabeto.O.ordinal()] = 47;
+		transicao[0][Alfabeto.A.ordinal()] = 47;
+		transicao[0][Alfabeto.U.ordinal()] = 47;
+		transicao[0][Alfabeto.H.ordinal()] = 47;
+		transicao[0][Alfabeto.D.ordinal()] = 47;
+		transicao[0][Alfabeto.LETRA.ordinal()] = 47;
+		transicao[1][Alfabeto.F.ordinal()] = 2;	
+		transicao[1][Alfabeto.N.ordinal()] = 4;
+		transicao[4][Alfabeto.T.ordinal()] = 5;	
+		transicao[7][Alfabeto.L.ordinal()] = 8;
+		transicao[8][Alfabeto.O.ordinal()] = 9;
+		transicao[9][Alfabeto.A.ordinal()] = 10;
+		transicao[10][Alfabeto.T.ordinal()] = 11;
+		transicao[13][Alfabeto.H.ordinal()] = 14;
+		transicao[14][Alfabeto.A.ordinal()] = 15;
+		transicao[15][Alfabeto.R.ordinal()] = 16;
+		transicao[18][Alfabeto.O.ordinal()] = 19;
+		transicao[19][Alfabeto.I.ordinal()] = 20;
+		transicao[20][Alfabeto.D.ordinal()] = 21;
+		transicao[23][Alfabeto.T.ordinal()] = 24;
+		transicao[24][Alfabeto.R.ordinal()] = 25;
+		transicao[25][Alfabeto.U.ordinal()] = 26;
+		transicao[26][Alfabeto.C.ordinal()] = 27;
+		transicao[27][Alfabeto.T.ordinal()] = 28;
+		transicao[30][Alfabeto.L.ordinal()] = 31;
+		transicao[31][Alfabeto.S.ordinal()] = 32;
+		transicao[32][Alfabeto.E.ordinal()] = 33;
+		transicao[34][Alfabeto.H.ordinal()] = 35;
+		transicao[35][Alfabeto.I.ordinal()] = 36;
+		transicao[36][Alfabeto.L.ordinal()] = 37;
+		transicao[37][Alfabeto.E.ordinal()] = 38;
+		transicao[40][Alfabeto.E.ordinal()] = 41;
+		transicao[41][Alfabeto.T.ordinal()] = 42;
+		transicao[42][Alfabeto.U.ordinal()] = 43;
+		transicao[43][Alfabeto.R.ordinal()] = 44;
+		transicao[44][Alfabeto.N.ordinal()] = 45;
+		
+		transicao[0][Alfabeto.MAIS.ordinal()] = 49;
+		transicao[0][Alfabeto.DIGITO.ordinal()] = 51;
+		transicao[0][Alfabeto.MENOS.ordinal()] = 56;
+		transicao[0][Alfabeto.ASTERISCO.ordinal()] = 58;
+		transicao[0][Alfabeto.BARRA.ordinal()] = 60;
+		transicao[0][Alfabeto.MENOR.ordinal()] = 66;
+		transicao[0][Alfabeto.MAIOR.ordinal()] = 70;
+		transicao[0][Alfabeto.IGUAL.ordinal()] = 74;
+		transicao[0][Alfabeto.EXCLAMACAO.ordinal()] = 78;
+		transicao[0][Alfabeto.PONTOVIRGULA.ordinal()] = 81;
+		transicao[0][Alfabeto.ACH.ordinal()] = 83;
+		transicao[0][Alfabeto.FCH.ordinal()] = 85;
+		transicao[0][Alfabeto.ACO.ordinal()] = 87;
+		transicao[0][Alfabeto.FCO.ordinal()] = 89;
+		transicao[0][Alfabeto.AP.ordinal()] = 91;
+		transicao[0][Alfabeto.FP.ordinal()] = 93;
+		transicao[0][Alfabeto.ASPAS.ordinal()] = 96;
+		
+		transicao[51][Alfabeto.DIGITO.ordinal()] = 51;
+		
 		transicao[96][Alfabeto.ASPAS.ordinal()] = 98;
 		transicao[97][Alfabeto.ASPAS.ordinal()] = 98;
 		transicao[51][Alfabeto.PONTO.ordinal()] = 53;
