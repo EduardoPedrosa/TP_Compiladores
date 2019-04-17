@@ -1,2 +1,0 @@
-char a = 'a';
-    char b = 'b';

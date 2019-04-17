@@ -1,3 +1,11 @@
+/* 
+  Trabalho de Compiladores
+  Analisador Léxico
+  Copyright 2019 by Eduardo Miranda Pedrosa Filho,
+                    Igor Henrique Torati Ruy,
+                    João Pedro Fachini Alvarenga and
+                    Matheus Henrique Carvalho de Paiva Resende
+*/
 import java.util.List;
 import java.util.ArrayList;
 /*
@@ -24,7 +32,8 @@ public class TabelaDeSimbolos{
         return tabela.get(indice);
     }
 
-    public int encontrarSimbolo(String lexema){
+    public int encontrarSimbolo(String lexema){ //retorna o indice do lexema se ele 
+                                                //ja esta na tabela, se nao retorna -1
         int indice = 0;
         for(Simbolos s : tabela){
             if(s.getNome().equals(lexema)){

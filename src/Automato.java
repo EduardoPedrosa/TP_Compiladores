@@ -1,3 +1,11 @@
+/* 
+  Trabalho de Compiladores
+  Analisador Léxico
+  Copyright 2019 by Eduardo Miranda Pedrosa Filho,
+                    Igor Henrique Torati Ruy,
+                    João Pedro Fachini Alvarenga and
+                    Matheus Henrique Carvalho de Paiva Resende
+*/
 import java.util.HashMap;
 
 public class Automato {
@@ -7,10 +15,16 @@ public class Automato {
 						  BARRA,PONTOVIRGULA,EXCLAMACAO,PONTO,OUTRO,ASPAS};
 	private int estadoAtual;
 	private int[][] transicao;
+	//Hash que tem como chave um estado final e o valor o tipo do token que esse estado final gera
+	//Todo estado final gera um token.
 	private HashMap<Integer,Token.TipoToken> estadosFinais;
+	//Hash com todas os simbolos válidos lidos
+	//A chave é o proprio caractere e o valor é um enum que será usado para a identificação
+	//de padrões no automato
 	private HashMap<Character, Alfabeto> palavrasDoAlfabeto = new HashMap<Character, Alfabeto>();
 
-	private final void setTransicoesPra47(int estado){
+	private final void setTransicoesPra47(int estado){ //setar todas as transicoes do estado
+		 											   //passado por parametro para 47
 		for(int i = 0; i < 18; i++){
 			if(transicao[estado][i] == -1){
 				transicao[estado][i] = 47;
@@ -21,12 +35,13 @@ public class Automato {
 	public Automato () {
 		estadoAtual = 0;
 		transicao = new int[100][36];
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 100; i++){  //preenche a matriz de proximos estados com -1 (estado inválido)
 			for(int j = 0; j < 36; j++){
 				transicao[i][j] = -1;
 			}
 		}
-		estadosFinais = new HashMap<Integer, Token.TipoToken>();	
+		estadosFinais = new HashMap<Integer, Token.TipoToken>();
+		//populando o hash com todos os caracteres validos e seus respectivos valores no enum
 		palavrasDoAlfabeto.put('a',Alfabeto.A);
 		palavrasDoAlfabeto.put('b',Alfabeto.LETRA);
 		palavrasDoAlfabeto.put('c',Alfabeto.C);
@@ -83,6 +98,7 @@ public class Automato {
 		palavrasDoAlfabeto.put('\n',Alfabeto.OUTRO);
 		palavrasDoAlfabeto.put('\t',Alfabeto.OUTRO);
 		
+		//populando o hash de estados finais com os seus TipoToken como valores
 		estadosFinais.put(3, Token.TipoToken.PAL);
 		estadosFinais.put(6, Token.TipoToken.PAL);
 		estadosFinais.put(12, Token.TipoToken.PAL);
@@ -117,7 +133,9 @@ public class Automato {
 		estadosFinais.put(94, Token.TipoToken.DELIM);
 		estadosFinais.put(99, Token.TipoToken.CAR);
 		
-		for (int i = 18; i < 36; i++){ //Estado x lê outros caracteres vai pra estado w
+		//Estado x lê "outros" caracteres vai pra estado w
+		//outros é indicado por todos os enum da posicao de 18 a 36 no Alfabeto
+		for (int i = 18; i < 36; i++){ 
 			transicao[2][i] = 3;
 			transicao[5][i] = 6;
 			transicao[11][i] = 12;
@@ -160,7 +178,9 @@ public class Automato {
 			transicao[43][i] = 48;
 			transicao[44][i] = 48;
 		}
-                for(int i = 0; i < 36; i++){ //Qualquer caractere, revisar
+		//Estado x lê "todos" caracteres vai pra estado w
+		//todos é qualquer caractere representado no enum de 0 a 36 no Alfabeto
+		for(int i = 0; i < 36; i++){ 
 			transicao[49][i] = 50;
 			transicao[56][i] = 57;
 			transicao[58][i] = 59;
@@ -180,7 +200,7 @@ public class Automato {
 			transicao[89][i] = 90;
 			transicao[91][i] = 92;
 			transicao[93][i] = 94;
-			if(i != Alfabeto.ASTERISCO.ordinal()){ //Conferir
+			if(i != Alfabeto.ASTERISCO.ordinal()){
 				transicao[60][i] = 65;
 				transicao[61][i] = 61;
 			}
@@ -191,13 +211,16 @@ public class Automato {
 				transicao[96][i] = 97;
 			}
 		}
-                for(int i = 0; i < 17; i++){ //Lê todas as letras
+		//Estado x lê "letras" vai pra estado w
+		//letras é indicado por todos os enum da posicao de 0 a 17 no Alfabeto
+		for(int i = 0; i < 17; i++){ 
 			transicao[54][i] = 52;
 			transicao[61][i] = 62;
 		}
-                
-		setTransicoesPra47(1);
+		
+		//setar transicoes para 47 (estado de de identificação dos "identificadores")
 		setTransicoesPra47(47);
+		setTransicoesPra47(1);
 		setTransicoesPra47(2);
 		setTransicoesPra47(4);
 		setTransicoesPra47(5);
@@ -235,8 +258,9 @@ public class Automato {
 		setTransicoesPra47(43);
 		setTransicoesPra47(44);
 		setTransicoesPra47(45);
-                
-                transicao[0][Alfabeto.I.ordinal()] = 1;
+				
+		//transicoes especificas do automato 
+		transicao[0][Alfabeto.I.ordinal()] = 1;
 		transicao[0][Alfabeto.F.ordinal()] = 7;
 		transicao[0][Alfabeto.C.ordinal()] = 13;
 		transicao[0][Alfabeto.V.ordinal()] = 18;
@@ -282,7 +306,6 @@ public class Automato {
 		transicao[42][Alfabeto.U.ordinal()] = 43;
 		transicao[43][Alfabeto.R.ordinal()] = 44;
 		transicao[44][Alfabeto.N.ordinal()] = 45;
-		
 		transicao[0][Alfabeto.MAIS.ordinal()] = 49;
 		transicao[0][Alfabeto.DIGITO.ordinal()] = 51;
 		transicao[0][Alfabeto.MENOS.ordinal()] = 56;
@@ -300,9 +323,7 @@ public class Automato {
 		transicao[0][Alfabeto.AP.ordinal()] = 91;
 		transicao[0][Alfabeto.FP.ordinal()] = 93;
 		transicao[0][Alfabeto.ASPAS.ordinal()] = 96;
-		
 		transicao[51][Alfabeto.DIGITO.ordinal()] = 51;
-		
 		transicao[96][Alfabeto.ASPAS.ordinal()] = 98;
 		transicao[97][Alfabeto.ASPAS.ordinal()] = 98;
 		transicao[51][Alfabeto.PONTO.ordinal()] = 53;
@@ -323,20 +344,23 @@ public class Automato {
 	
 	public Token.TipoToken executar(char c) {
 		Alfabeto palavraAlfabeto = palavrasDoAlfabeto.get(c);
-		if(palavraAlfabeto == null) {
-			if(estadoAtual != 61){ //ignorando o conteudo dos comentarios
+		if(palavraAlfabeto == null) {  //quer dizer que nao é um caractere previsto no alfabeto
+			if((estadoAtual != 61) && (estadoAtual != 62)){ //ignorando o conteudo dos comentarios
 				return Token.TipoToken.PANIC;
 			} else {
 				palavraAlfabeto = Alfabeto.OUTRO;
 			}
 		}
-		int idCar = palavraAlfabeto.ordinal();
+		int idCar = palavraAlfabeto.ordinal();  //indice que representa qual o 
+												//caractere lido e a posicao dele na matriz
 		int proxEstado = transicao[estadoAtual][idCar];
-		if(isEstadoFinal(proxEstado)) {
+		//se o proximo estado for final retorno o token desse estado final
+		if(isEstadoFinal(proxEstado)) { 
 			estadoAtual = 0;
 			return estadosFinais.get(proxEstado);
 		}
-
+		//se o proximo estado for -1 quer dizer que nao tem transição prevista para o 
+		//caractere lido. Isso significa um erro léxico
 		if(proxEstado == -1){
 			if(!Character.isWhitespace(c)){
 				return Token.TipoToken.ERROR;

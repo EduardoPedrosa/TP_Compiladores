@@ -1,0 +1,6 @@
+char 'aa';
+float @a = 1.2.3;
+int b$ = 123ab;
+float _c_ = a,b;
+c = c.b;
+
