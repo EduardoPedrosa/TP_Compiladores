@@ -125,12 +125,12 @@ public class Automato {
 		estadosFinais.put(77, Token.TipoToken.OPCOMP);
 		estadosFinais.put(80, Token.TipoToken.OPCOMP);	
 		estadosFinais.put(82, Token.TipoToken.DELIM);	
-		estadosFinais.put(84, Token.TipoToken.DELIM);	
-		estadosFinais.put(86, Token.TipoToken.DELIM);
-		estadosFinais.put(88, Token.TipoToken.DELIM);	
-		estadosFinais.put(90, Token.TipoToken.DELIM);	
-		estadosFinais.put(92, Token.TipoToken.DELIM);	
-		estadosFinais.put(94, Token.TipoToken.DELIM);
+		estadosFinais.put(84, Token.TipoToken.ACHAVES);
+		estadosFinais.put(86, Token.TipoToken.FCHAVES);
+		estadosFinais.put(88, Token.TipoToken.ACOLCHETES);
+		estadosFinais.put(90, Token.TipoToken.FCOLCHETES);
+		estadosFinais.put(92, Token.TipoToken.FPARENTESES);
+		estadosFinais.put(94, Token.TipoToken.APARENTESES);
 		estadosFinais.put(99, Token.TipoToken.CAR);
 		
 		//Estado x lê "outros" caracteres vai pra estado w
@@ -320,8 +320,8 @@ public class Automato {
 		transicao[0][Alfabeto.FCH.ordinal()] = 85;
 		transicao[0][Alfabeto.ACO.ordinal()] = 87;
 		transicao[0][Alfabeto.FCO.ordinal()] = 89;
-		transicao[0][Alfabeto.AP.ordinal()] = 91;
-		transicao[0][Alfabeto.FP.ordinal()] = 93;
+		transicao[0][Alfabeto.AP.ordinal()] = 93;
+		transicao[0][Alfabeto.FP.ordinal()] = 91;
 		transicao[0][Alfabeto.ASPAS.ordinal()] = 96;
 		transicao[51][Alfabeto.DIGITO.ordinal()] = 51;
 		transicao[96][Alfabeto.ASPAS.ordinal()] = 98;

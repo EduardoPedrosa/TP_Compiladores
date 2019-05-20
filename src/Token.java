@@ -8,6 +8,7 @@
 */
 public class Token {
 	public static enum TipoToken{ID,NUM,NUMFLOAT,CAR,OPAR,OPCOMP,OPCOMENT,DELIM,PAL,ATRIB,
+		APARENTESES, FPARENTESES, ACHAVES, FCHAVES, ACOLCHETES, FCOLCHETES,
 		ERROR,PANIC}; 
 			//Os tipos ERROR e PANIC é so pra dar o feedback de erro no analisador léxico
 	private TipoToken tipo;
