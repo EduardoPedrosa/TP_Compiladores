@@ -10,6 +10,10 @@ public class AnalisadorSintatico {
         indexToken = 0;
     }
 
+    public void executarAnalizadorSintatico(){
+        Programa();
+    }
+
     private Token getTokenAtual(){
         return tokens.get(indexToken);
     }
@@ -18,7 +22,7 @@ public class AnalisadorSintatico {
         System.out.println("Erro sintatico");
     }
 
-    public void match(Token esperado){
+    private void match(Token esperado){
         Token atual = getTokenAtual();
         if(atual.getTipoToken() == esperado.getTipoToken()){
             indexToken++;
@@ -27,48 +31,50 @@ public class AnalisadorSintatico {
         }
     }
 
-    public boolean ehProximo(TipoToken tipo){
+    private boolean ehProximo(TipoToken tipo){
         Token token = tokens.get(indexToken+1);
         if(token.getTipoToken() == tipo){
             return true;
         }
         return false;
-    } 
+    }
 
-    public void Programa(){
+    //<programa> ::= <declaração-lista>
+    private void Programa(){
         DeclaracaoLista();
     }
 
-    public void DeclaracaoLista(){
+    //<declaração-lista> ::= <declaração> {<declaração>}
+    private void DeclaracaoLista(){
         Declaracao();
         if((EhProximo(Token.TipoToken.INT)) || (EhProximo(Token.TipoToken.FLOAT)) || (EhProximo(Token.TipoToken.CHAR)) || (EhProximo(Token.TipoToken.VOID)) || (EhProximo(Token.TipoToken.STRUCT))){
             DeclaracaoLista();
         }
     }
 
-    public void Declaracao(){
+    private void Declaracao(){
         TipoEspecificador();
         Ident();
         Declaracao2();
     }
 
-    public void Declaracao2(){
+    private void Declaracao2(){
         if(ehProximo(Token.TipoToken.DELIM)){
             VarDeclaracao();
-        } else if((ehProximo(Token.TipoToken.APARENTESES) || ehProximo(Token.TipoToken.ACOLCHETES)){
+        } else if((ehProximo(Token.TipoToken.APARENTESES) || ehProximo(Token.TipoToken.ACOLCHETES))){
             FunDeclaracao();
         } else {
             Erro();
         }
     }
 
-    public void VarDeclaracao(){
+    private void VarDeclaracao(){
         if(ehProximo(Token.TipoToken.DELIM)){
             match(Token.TipoToken.DELIM);
         } else if(ehProximo(Token.TipoToken.ACOLCHETES)){
             match(Token.TipoToken.ACOLCHETES);
             NumInt();
-            match(Token.TipoToken.FCOLCHETES)
+            match(Token.TipoToken.FCOLCHETES);
             if(ehProximo(Token.TipoToken.ACOLCHETES)){
                 VarDeclaracao();
             }
@@ -78,7 +84,7 @@ public class AnalisadorSintatico {
         }
     }
 
-    public void TipoEspecificador(){
+    private void TipoEspecificador(){
         if(prox(Token.TipoToken.INT)){
             match(Token.TipoToken.INT);
         } else if(prox(Token.TipoToken.FLOAT)){
@@ -98,14 +104,14 @@ public class AnalisadorSintatico {
         }
     }
 
-    public void FunDeclaracao(){
+    private void FunDeclaracao(){
         match(Token.TipoToken.APARENTESES);
         Params();
         match(Token.TipoToken.FPARENTESES);
         CompostoDecl();
     }
 
-    public void Params(){
+    private void Params(){
         if(ehProximo(Token.TipoToken.VOID)){
             match(Token.TipoToken.VOID);
         } else {
@@ -113,7 +119,7 @@ public class AnalisadorSintatico {
         }
     }
 
-    public void ParamLista(){
+    private void ParamLista(){
         Param();
         if(ehProximo(Token.TipoToken.DELIM)){  //colocar virgula no automato
             match(Token.TipoToken.DELIM); 
@@ -121,27 +127,27 @@ public class AnalisadorSintatico {
         }
     }
 
-    public void Param(){
+    private void Param(){
         TipoEspecificador();
         Ident();
         Param2();
     }
 
-    public void Param2(){
+    private void Param2(){
         if(ehProximo(Token.TipoToken.ACOLCHETES)){
             match(Token.TipoToken.ACOLCHETES);
             match(Token.Tipo.FCOLCHETES);
         }
     }
 
-    public void CompostoDecl(){
+    private void CompostoDecl(){
         match(Token.TipoToken.ACHAVES);
         LocalDeclaracoes();
         ComandoLista();
         match(Token.TipoToken.FCHAVES);
     }
 
-    public void LocalDeclaracoes(){
+    private void LocalDeclaracoes(){
         if((EhProximo(Token.TipoToken.INT)) || (EhProximo(Token.TipoToken.FLOAT)) || (EhProximo(Token.TipoToken.CHAR)) || (EhProximo(Token.TipoToken.VOID)) || (EhProximo(Token.TipoToken.STRUCT))){
             Declaracao();
             LocalDeclaracoes();

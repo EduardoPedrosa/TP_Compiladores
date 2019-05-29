@@ -1,0 +1,82 @@
+1. <programa> ::= <declaracao-lista> ## 1 regra
+
+2. <declaracao-lista> ::= <declaracao> {<declaracao>} ## 1 regra
+
+3. <declaracao> ::= <var-declaracao> | <fun-declaracao> ## 2 regras
+
+4.1 <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> ## 1 regra
+4. <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete> {<abre-colchete> <num-int> <fecha-colchete>} ; ## 2 regras
+
+5. <tipo-especificador> ::= int | float | char | void | struct <ident> <abre-chave> <atributos-declaracao> <fecha-chave> ## 5 regras
+
+6. <atributos-declaracao> ::= <var-declaracao> {<var-declaracao>} ## 1 regra
+
+7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> ## 1 regra
+
+8. <params> ::= <param-lista> | void ## 2 regras
+
+9. <param-lista> ::= <param> {, <param>} ## 1 regra
+
+10. <param> ::= <tipo-especificador> <ident> | <tipo-especificador> <ident> <abre-colchete> <fecha-colchete> ## 2 regras
+
+11. <composto-decl> ::= <abre-chave> <local-declaracoes> <comando-lista> <fecha-chave> ## 1 regra
+
+12. <local-declaracoes> ::= {<var-declaracao>} ## 1 regra
+
+13. <comando-lista> ::= { <comando> } ## 1 regra
+
+14. <comando> ::= <expressao-decl> | <composto-decl> | <selecao-decl> | <iteracao-decl> | <retorno-decl> ## 5 regras
+
+15. <expressao-decl> ::= <expressao> ; | ; ## 2 regras
+
+16. <selecao-decl> ::= if ( <expressao> ) <comando> | if ( <expressao> ) <comando> else <comando> ## 2 regras
+
+17. ## ???????????????????????????????????????????????????????????????????????????????????????
+
+18. <iteracao-decl> ::= while ( <expressao> ) <comando> ## 1 regra
+
+19. <retorno-decl> ::= return ; | return <expressao> ; ## 2 regras
+
+20. <expressao> ::= <var> = <expressao> | <expressao-simples> ## 2 regras
+
+21. <var> ::= <ident> | <ident> <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} ## 2 regras
+
+22. <expressao-simples> ::= <expressao-soma> <relacional> <expressao-soma> | <expressao-soma> ## 2 regras
+
+23. ## ???????????????????????????????????????????????????????????????????????????????????????
+
+24. <relacional> ::= <= | < | > | >= | == | != ## 6 regras
+
+25. <expressao-soma> ::= <termo> {<soma> <termo>} ## 1 regra
+
+26. <soma> ::= + | - ## 2 regras
+
+27. <termo> ::= <fator> {<mult> <fator>} ## 1 regra
+
+28. <mult> ::= * | / ## 2 regra
+
+29. <fator> ::= ( <expressao> ) | <var> | <ativacao> | <num> | <num-int> ## 5 regras
+
+30. <ativacao> ::= <ident> ( <args> ) ## 1 regra
+
+31. <args> ::= [<arg-lista>] ## 1 regra
+
+32. <arg-lista> ::= <expressao> {, <expressao>} ## 1 regra
+
+33. <num> ::= [+ | -] <dıgito> {<dıgito>} [. <dıgito> {<dıgito>}] [E [+ | -] <dıgito> {<dıgito>}] ## 1 regra
+
+34. <num-int> ::= <dıgito> {<dıgito>} ## 1 regra
+
+35. <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 ## 10 regras
+
+36. <ident> ::= <letra> {<letra> | <dıgito>} ## 1 regra
+
+37. <letra> ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z ## 26 regras
+
+38. <abre-chave> ::= { ## 1 regra
+
+39. <fecha-chave> ::= } ## 1 regra
+
+40. <abre-colchete> ::= [ ## 1 regra
+
+41. <fecha-colchete> ::= ] ## 1 regra
