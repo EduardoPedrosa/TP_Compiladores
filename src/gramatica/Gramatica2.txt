@@ -7,9 +7,13 @@ Gramatica organizada em quantidade de regras
 7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> ## 1 regra
 9. <param-lista> ::= <param> {, <param>} ## 1 regra
 11. <composto-decl> ::= <abre-chave> <local-declaracoes> <comando-lista> <fecha-chave> ## 1 regra
+10.1 <param> ::= <tipo-especificador> <ident> <param-aux> ## 1 regra
 12. <local-declaracoes> ::= {<var-declaracao>} ## 1 regra
 13. <comando-lista> ::= { <comando> } ## 1 regra
+16.1 <selecao-decl> ::= if ( <expressao> ) <comando> <selecao-decl-aux> ## 1 regra
 18. <iteracao-decl> ::= while ( <expressao> ) <comando> ## 1 regra
+21.1 <var> ::= <ident> <var-aux> ## 1 regra
+22.1 <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> ## 1 regra   
 25. <expressao-soma> ::= <termo> {<soma> <termo>} ## 1 regra
 27. <termo> ::= <fator> {<mult> <fator>} ## 1 regra
 30. <ativacao> ::= <ident> ( <args> ) ## 1 regra
@@ -26,13 +30,13 @@ Gramatica organizada em quantidade de regras
 3. <declaracao> ::= <var-declaracao> | <fun-declaracao> ## 2 regras
 4. <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete> {<abre-colchete> <num-int> <fecha-colchete>} ; ## 2 regras
 8. <params> ::= <param-lista> | void ## 2 regras
-10. <param> ::= <tipo-especificador> <ident> | <tipo-especificador> <ident> <abre-colchete> <fecha-colchete> ## 2 regras
+10. <param-aux> ::= #vazio# | <abre-colchete> <fecha-colchete> ## 2 regras
 15. <expressao-decl> ::= <expressao> ; | ; ## 2 regras
-16. <selecao-decl> ::= if ( <expressao> ) <comando> | if ( <expressao> ) <comando> else <comando> ## 2 regras
+16. <selecao-decl-aux> ::= #vazio# | else <comando> ## 2 regras
 19. <retorno-decl> ::= return ; | return <expressao> ; ## 2 regras
 20. <expressao> ::= <var> = <expressao> | <expressao-simples> ## 2 regras
-21. <var> ::= <ident> | <ident> <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} ## 2 regras
-22. <expressao-simples> ::= <expressao-soma> <relacional> <expressao-soma> | <expressao-soma> ## 2 regras
+21. <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} ## 2 regras
+22. <expressao-simples-aux> ::= <relacional> <expressao-soma> | #vazio# ## 2 regras
 26. <soma> ::= + | - ## 2 regras
 28. <mult> ::= * | / ## 2 regras
 
