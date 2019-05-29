@@ -78,5 +78,9 @@ public class AnalisadorLexico {
 				System.out.println(t);
 			}
 		}
+	
+	}
+	public List<Token> getTokens(){
+		return tokens;
 	}
 }

@@ -13,13 +13,15 @@ import java.io.FileReader;
 
 public class main {
     public static void main(String[] args) {
-        AnalisadorLexico analisadorLex = new AnalisadorLexico();
         try {
             System.out.println("Nome do arquivo de entrada: ");
             Scanner entrada = new Scanner(System.in);
             String nomeArq = entrada.nextLine();
             BufferedReader leitor = new BufferedReader(new FileReader(nomeArq));
+            AnalisadorLexico analisadorLex = new AnalisadorLexico();
             analisadorLex.Analisar(leitor);
+            AnalisadorSintatico analisadorSin = new AnalisadorSintatico(analisadorLex);
+            
             leitor.close();
         } catch(IOException e) {
             System.out.println(e.getMessage());

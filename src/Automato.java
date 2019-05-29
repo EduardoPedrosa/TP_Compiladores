@@ -99,16 +99,16 @@ public class Automato {
 		palavrasDoAlfabeto.put('\t',Alfabeto.OUTRO);
 		
 		//populando o hash de estados finais com os seus TipoToken como valores
-		estadosFinais.put(3, Token.TipoToken.PAL);
-		estadosFinais.put(6, Token.TipoToken.PAL);
-		estadosFinais.put(12, Token.TipoToken.PAL);
+		estadosFinais.put(3, Token.TipoToken.IF);
+		estadosFinais.put(6, Token.TipoToken.INT);
+		estadosFinais.put(12, Token.TipoToken.FLOAT);
 		estadosFinais.put(48, Token.TipoToken.ID);
-		estadosFinais.put(17, Token.TipoToken.PAL);
-		estadosFinais.put(22, Token.TipoToken.PAL);
-		estadosFinais.put(29, Token.TipoToken.PAL);
-		estadosFinais.put(95, Token.TipoToken.PAL);
-		estadosFinais.put(39, Token.TipoToken.PAL);
-		estadosFinais.put(46, Token.TipoToken.PAL);
+		estadosFinais.put(17, Token.TipoToken.CHAR);
+		estadosFinais.put(22, Token.TipoToken.VOID);
+		estadosFinais.put(29, Token.TipoToken.STRUCT);
+		estadosFinais.put(95, Token.TipoToken.ELSE);
+		estadosFinais.put(39, Token.TipoToken.WHILE);
+		estadosFinais.put(46, Token.TipoToken.RETURN);
 		estadosFinais.put(50, Token.TipoToken.OPAR);
 		estadosFinais.put(52, Token.TipoToken.NUM);
 		estadosFinais.put(55, Token.TipoToken.NUMFLOAT);

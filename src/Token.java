@@ -7,7 +7,7 @@
                     Matheus Henrique Carvalho de Paiva Resende
 */
 public class Token {
-	public static enum TipoToken{ID,NUM,NUMFLOAT,CAR,OPAR,OPCOMP,OPCOMENT,DELIM,PAL,ATRIB,
+	public static enum TipoToken{ID,NUM,NUMFLOAT,CAR,OPAR,OPCOMP,OPCOMENT,DELIM,ATRIB, INT, FLOAT, STRUCT, IF, ELSE, WHILE, VOID, RETURN,
 		APARENTESES, FPARENTESES, ACHAVES, FCHAVES, ACOLCHETES, FCOLCHETES,
 		ERROR,PANIC}; 
 			//Os tipos ERROR e PANIC é so pra dar o feedback de erro no analisador léxico
@@ -25,6 +25,10 @@ public class Token {
 		this.tipo = tipo;
 		this.valor = valor;
 		this.indiceTS = indiceTS;
+	}
+
+	public TipoToken getTipoToken(){
+		return tipo;
 	}
 
 	@Override
