@@ -25,11 +25,12 @@ public class AnalisadorLexico {
 		String linha = "";
 		String palavra = "";
 		int numLinha = 0; //contador da linha de leitura no arquivo 
+		int numColuna = 0; //contador da coluna de leitura no arquivo
 		boolean achouErroLexico = false;
 		while((linha = arquivo.readLine()) != null) { //lê cada linha até que nao se encontra mais nenhuma linha
 			linha += " ";
 			++numLinha;
-			int numColuna = 0; //contador da coluna de leitura no arquivo
+			numColuna = 0; //contador da coluna de leitura no arquivo
 			for(int i = 0; i < linha.length(); i++) {
 				numColuna++;
 				Token.TipoToken tipoToken = automato.executar(linha.charAt(i));
@@ -55,9 +56,9 @@ public class AnalisadorLexico {
 								//CRIANDO TOKEN
 								Token novoToken;
 								if (indiceTS != -1)
-									novoToken = new Token(tipoToken, palavra, indiceTS);
+									novoToken = new Token(tipoToken, palavra, indiceTS, numLinha, numColuna-1);
 								else
-									novoToken = new Token(tipoToken, palavra);
+									novoToken = new Token(tipoToken, palavra, numLinha, numColuna-1);
 								tokens.add(novoToken);
 							}
 						}
@@ -78,6 +79,7 @@ public class AnalisadorLexico {
 				System.out.println(t);
 			}
 		}
+		tokens.add(new Token(Token.TipoToken.FIM,"",numLinha,numColuna));
 	
 	}
 	public List<Token> getTokens(){

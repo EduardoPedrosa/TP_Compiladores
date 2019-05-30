@@ -1,10 +1,11 @@
 int a;
-a = 1;
-f = 3.1415;
-while(a < 10) {
-	f = f * f; /* faz f^9 */
-	a = a + 1; 
-}
+int b;
+float f;
+int elevado(){
+	while(a = 10){
+		f = f * f; /* faz f^9 */
+		a = a + 1;	
+	}
 char result = 'r';
 print(result);
 print('='); 

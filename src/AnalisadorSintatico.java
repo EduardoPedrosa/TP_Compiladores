@@ -19,7 +19,8 @@ public class AnalisadorSintatico {
     }
 
     private void Erro(){
-        System.out.println("Erro sintatico");
+        Token token = getTokenAtual();
+        System.out.println("Erro sintatico na linha " + token.getNumLinha() + " coluna " + token.getNumColuna() + " " + token);
     }
 
     private void match(Token.TipoToken esperado){
@@ -27,12 +28,12 @@ public class AnalisadorSintatico {
         if(atual.getTipoToken() == esperado){
             indexToken++;
         } else {
-            System.out.println("Tipo de token nao esperado");
+            System.out.println("Tipo de token nao esperado na linha " + atual.getNumLinha() + " coluna " + atual.getNumColuna());
         }
     }
 
     private boolean ehProximo(Token.TipoToken tipo){
-        Token token = tokens.get(indexToken+1);
+        Token token = tokens.get(indexToken);
         if(token.getTipoToken() == tipo){
             return true;
         }
@@ -49,6 +50,8 @@ public class AnalisadorSintatico {
         Declaracao();
         if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){
             DeclaracaoLista();
+        } else if(!ehProximo(Token.TipoToken.FIM)){
+            Erro();
         }
     }
 
@@ -67,6 +70,9 @@ public class AnalisadorSintatico {
         if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){
             VarDeclaracao();
             VarDeclaracaoLoop();
+        } else if(!ehProximo(Token.TipoToken.FIM)){
+            System.out.println("aqui");
+            Erro();
         }
     }
 
@@ -296,13 +302,56 @@ public class AnalisadorSintatico {
         }
     }
 
-    private void Expressao(){
+    private void Expressao(){ //erro
         if(ehProximo(Token.TipoToken.ID)){
-            Var();
+            Ident();
+            Expressao2();
+        } else if((ehProximo(Token.TipoToken.APARENTESES)) || (ehProximo(Token.TipoToken.NUM)) || (ehProximo(Token.TipoToken.NUMFLOAT))){
+            ExpressaoSimples();
+        } else {
+            Erro();
+        }
+    }
+
+    private void Expressao2(){
+        if((ehProximo(Token.TipoToken.APARENTESES)) || (ehProximo(Token.TipoToken.NUM)) || (ehProximo(Token.TipoToken.APARENTESES)) ){
+            ExpressaoSimples2();
+        } else {
+            Var2();
             match(Token.TipoToken.ATRIB);
             Expressao();
-        } else if((ehProximo(Token.TipoToken.APARENTESES)) || (ehProximo(Token.TipoToken.ID)) || (ehProximo(Token.TipoToken.NUM)) || (ehProximo(Token.TipoToken.NUMFLOAT))){
-            ExpressaoSimples();
+        }
+        
+    }
+
+    private void Var2(){
+        VarAux();
+    }
+
+    private void ExpressaoSimples2(){
+        ExpressaoSoma2();
+        ExpressaoSomaAux();
+    }
+
+    private void ExpressaoSoma2(){
+        Termo2();
+        ExpressaoSomaLoop();
+    }
+
+    private void Termo2(){
+        Fator2();
+        TermoLoop();
+    }
+
+    private void Fator2(){
+        if(ehProximo(Token.TipoToken.APARENTESES)){
+            match(Token.TipoToken.APARENTESES);
+            Expressao();
+            match(Token.TipoToken.FPARENTESES);
+        } else if (ehProximo(Token.TipoToken.NUMFLOAT)){
+            Num();
+        } else if (ehProximo(Token.TipoToken.NUM)){
+            NumInt();
         } else {
             Erro();
         }

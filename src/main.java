@@ -21,7 +21,7 @@ public class main {
             AnalisadorLexico analisadorLex = new AnalisadorLexico();
             analisadorLex.Analisar(leitor);
             AnalisadorSintatico analisadorSin = new AnalisadorSintatico(analisadorLex);
-            
+            analisadorSin.executarAnaliseSintatica();
             leitor.close();
         } catch(IOException e) {
             System.out.println(e.getMessage());

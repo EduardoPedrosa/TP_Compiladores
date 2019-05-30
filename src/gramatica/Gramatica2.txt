@@ -40,7 +40,14 @@ Gramatica organizada em quantidade de regras
 16. <selecao-decl-aux> ::= #vazio# | else <comando> ## 2 regras
 19. <retorno-decl> ::= return <retorno-decl-aux>  ## 1 regra
 19.1 <retorno-decl-aux ::= ; | <expressao> ; ## 2 regras
-20. <expressao> ::= <var> = <expressao> | <expressao-simples> ## 2 regras
+20. <expressao> ::= <ident> <expressao-2> | | <expressao-simples-2>
+20.1 <expressao-2> ::= <var-2> = <expressao> 
+20.2 <var-2> ::= <var-aux>
+20.3 <expressao-simples-2> ::= <expressao-soma-2> <expressao-soma-aux>
+20.4 <expressao-soma-2> ::= <termo2><expressao-soma-loop>
+20.5 <termo2> ::= <fator2><termo-loop>
+20.6 <fator2> ::= ( <expressao> ) | <num> | <num-int> ## 4 regras
+
 21. <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} ## 2 regras
 22. <expressao-simples-aux> ::= <relacional> <expressao-soma> | #vazio# ## 2 regras
 26. <soma> ::= + | - ## 2 regras
