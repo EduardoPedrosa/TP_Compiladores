@@ -3,7 +3,8 @@ Gramatica organizada em quantidade de regras
 1. <programa> ::= <declaracao-lista> ## 1 regra
 2. <declaracao-lista> ::= <declaracao> {<declaracao>} ## 1 regra
 4.1 <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> ## 1 regra
-6. <atributos-declaracao> ::= <var-declaracao> {<var-declaracao>} ## 1 regra
+6. <atributos-declaracao> ::= <var-declaracao> <var-declaracao-loop>  ## 1 regra
+6.1 <var-declaracao-loop> ::= {<var-declaracao>}  ## 1 regra
 7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> ## 1 regra
 9. <param-lista> ::= <param> {, <param>} ## 1 regra
 11. <composto-decl> ::= <abre-chave> <local-declaracoes> <comando-lista> <fecha-chave> ## 1 regra
@@ -14,11 +15,14 @@ Gramatica organizada em quantidade de regras
 18. <iteracao-decl> ::= while ( <expressao> ) <comando> ## 1 regra
 21.1 <var> ::= <ident> <var-aux> ## 1 regra
 22.1 <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> ## 1 regra   
-25. <expressao-soma> ::= <termo> {<soma> <termo>} ## 1 regra
-27. <termo> ::= <fator> {<mult> <fator>} ## 1 regra
+25. <expressao-soma> ::= <termo> <expressao-soma-loop> ## 1 regra
+25.1 <expressao-soma-loop> ::= {<soma> <termo>} ## 1 regra
+27. <termo> ::= <fator> <termo-loop> ## 1 regra
+27.1 <termo-loop> ::= {<mult> <fator>} ## 1 regra
 30. <ativacao> ::= <ident> ( <args> ) ## 1 regra
 31. <args> ::= [<arg-lista>] ## 1 regra
-32. <arg-lista> ::= <expressao> {, <expressao>} ## 1 regra
+32. <arg-lista> ::= <expressao> <arg-lista-loop> ## 1 regra
+32.1 <arg-lista-loop> ::= {, <expressao>} ## 1 regra
 33. <num> ::= [+ | -] <dıgito> {<dıgito>} [. <dıgito> {<dıgito>}] [E [+ | -] <dıgito> {<dıgito>}] ## 1 regra
 34. <num-int> ::= <dıgito> {<dıgito>} ## 1 regra
 36. <ident> ::= <letra> {<letra> | <dıgito>} ## 1 regra

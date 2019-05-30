@@ -12,7 +12,7 @@ public class Automato {
 	private enum Alfabeto{I,N,T,F,L,O,A,S,R,U,
 						  C,E,W,H,V,D,LETRA,DIGITO,AP,FP,
 						  ACH,FCH,ACO,FCO,IGUAL,MAIOR,MENOR,MAIS,MENOS,ASTERISCO,
-						  BARRA,PONTOVIRGULA,EXCLAMACAO,PONTO,OUTRO,ASPAS};
+						  BARRA,PONTOVIRGULA,EXCLAMACAO,PONTO,OUTRO,ASPAS,VIRGULA};
 	private int estadoAtual;
 	private int[][] transicao;
 	//Hash que tem como chave um estado final e o valor o tipo do token que esse estado final gera
@@ -34,9 +34,9 @@ public class Automato {
 
 	public Automato () {
 		estadoAtual = 0;
-		transicao = new int[100][36];
-		for(int i = 0; i < 100; i++){  //preenche a matriz de proximos estados com -1 (estado inválido)
-			for(int j = 0; j < 36; j++){
+		transicao = new int[102][37];
+		for(int i = 0; i < 102; i++){  //preenche a matriz de proximos estados com -1 (estado inválido)
+			for(int j = 0; j < 37; j++){
 				transicao[i][j] = -1;
 			}
 		}
@@ -94,6 +94,7 @@ public class Automato {
 		palavrasDoAlfabeto.put('/',Alfabeto.BARRA);
 		palavrasDoAlfabeto.put('.',Alfabeto.PONTO);
 		palavrasDoAlfabeto.put('\'',Alfabeto.ASPAS);
+		palavrasDoAlfabeto.put(',',Alfabeto.VIRGULA);
 		palavrasDoAlfabeto.put(' ',Alfabeto.OUTRO);
 		palavrasDoAlfabeto.put('\n',Alfabeto.OUTRO);
 		palavrasDoAlfabeto.put('\t',Alfabeto.OUTRO);
@@ -103,7 +104,7 @@ public class Automato {
 		estadosFinais.put(6, Token.TipoToken.INT);
 		estadosFinais.put(12, Token.TipoToken.FLOAT);
 		estadosFinais.put(48, Token.TipoToken.ID);
-		estadosFinais.put(17, Token.TipoToken.CHAR);
+		estadosFinais.put(17, Token.TipoToken.CAR);
 		estadosFinais.put(22, Token.TipoToken.VOID);
 		estadosFinais.put(29, Token.TipoToken.STRUCT);
 		estadosFinais.put(95, Token.TipoToken.ELSE);
@@ -113,8 +114,8 @@ public class Automato {
 		estadosFinais.put(52, Token.TipoToken.NUM);
 		estadosFinais.put(55, Token.TipoToken.NUMFLOAT);
 		estadosFinais.put(57, Token.TipoToken.OPAR);
-		estadosFinais.put(59, Token.TipoToken.OPAR);
-		estadosFinais.put(65, Token.TipoToken.OPAR);
+		estadosFinais.put(59, Token.TipoToken.OPMULT);
+		estadosFinais.put(65, Token.TipoToken.OPMULT);
 		estadosFinais.put(64, Token.TipoToken.OPCOMENT);
 		estadosFinais.put(67, Token.TipoToken.OPCOMP);
 		estadosFinais.put(69, Token.TipoToken.OPCOMP);
@@ -132,10 +133,11 @@ public class Automato {
 		estadosFinais.put(92, Token.TipoToken.FPARENTESES);
 		estadosFinais.put(94, Token.TipoToken.APARENTESES);
 		estadosFinais.put(99, Token.TipoToken.CAR);
+		estadosFinais.put(101, Token.TipoToken.VIRGULA);
 		
 		//Estado x lê "outros" caracteres vai pra estado w
-		//outros é indicado por todos os enum da posicao de 18 a 36 no Alfabeto
-		for (int i = 18; i < 36; i++){ 
+		//outros é indicado por todos os enum da posicao de 18 a 37 no Alfabeto
+		for (int i = 18; i < 37; i++){ 
 			transicao[2][i] = 3;
 			transicao[5][i] = 6;
 			transicao[11][i] = 12;
@@ -179,8 +181,8 @@ public class Automato {
 			transicao[44][i] = 48;
 		}
 		//Estado x lê "todos" caracteres vai pra estado w
-		//todos é qualquer caractere representado no enum de 0 a 36 no Alfabeto
-		for(int i = 0; i < 36; i++){ 
+		//todos é qualquer caractere representado no enum de 0 a 37 no Alfabeto
+		for(int i = 0; i < 37; i++){ 
 			transicao[49][i] = 50;
 			transicao[56][i] = 57;
 			transicao[58][i] = 59;
@@ -200,6 +202,7 @@ public class Automato {
 			transicao[89][i] = 90;
 			transicao[91][i] = 92;
 			transicao[93][i] = 94;
+			transicao[100][i] = 101;
 			if(i != Alfabeto.ASTERISCO.ordinal()){
 				transicao[60][i] = 65;
 				transicao[61][i] = 61;
@@ -323,6 +326,7 @@ public class Automato {
 		transicao[0][Alfabeto.AP.ordinal()] = 93;
 		transicao[0][Alfabeto.FP.ordinal()] = 91;
 		transicao[0][Alfabeto.ASPAS.ordinal()] = 96;
+		transicao[0][Alfabeto.VIRGULA.ordinal()] = 100;
 		transicao[51][Alfabeto.DIGITO.ordinal()] = 51;
 		transicao[96][Alfabeto.ASPAS.ordinal()] = 98;
 		transicao[97][Alfabeto.ASPAS.ordinal()] = 98;
