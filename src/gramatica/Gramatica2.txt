@@ -2,10 +2,12 @@ Gramatica organizada em quantidade de regras
 
 1. <programa> ::= <declaracao-lista> ## 1 regra
 2. <declaracao-lista> ::= <declaracao> {<declaracao>} ## 1 regra
+4.01 <declaracao-aux> ::= <var-declaracao-aux> | <fun-declaracao-aux>
 4.1 <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> ## 1 regra
 6. <atributos-declaracao> ::= <var-declaracao> <var-declaracao-loop>  ## 1 regra
 6.1 <var-declaracao-loop> ::= {<var-declaracao>}  ## 1 regra
 7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> ## 1 regra
+7. <fun-declaracao-aux> ::= ( <params> ) <composto-decl> ## 1 regra
 9. <param-lista> ::= <param> {, <param>} ## 1 regra
 11. <composto-decl> ::= <abre-chave> <local-declaracoes> <comando-lista> <fecha-chave> ## 1 regra
 10.1 <param> ::= <tipo-especificador> <ident> <param-aux> ## 1 regra
@@ -16,28 +18,28 @@ Gramatica organizada em quantidade de regras
 21.1 <var> ::= <ident> <var-aux> ## 1 regra
 22.1 <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> ## 1 regra   
 25. <expressao-soma> ::= <termo> <expressao-soma-loop> ## 1 regra
+25.01 <expressao-soma-aux> ::= {<soma> <termo>} ##1 regra
 25.1 <expressao-soma-loop> ::= {<soma> <termo>} ## 1 regra
 27. <termo> ::= <fator> <termo-loop> ## 1 regra
 27.1 <termo-loop> ::= {<mult> <fator>} ## 1 regra
 30. <ativacao> ::= <ident> ( <args> ) ## 1 regra
+30.1 <ativacao-aux> ::= ( <args> ) ## 1 regra
 31. <args> ::= [<arg-lista>] ## 1 regra
 32. <arg-lista> ::= <expressao> <arg-lista-loop> ## 1 regra
 32.1 <arg-lista-loop> ::= {, <expressao>} ## 1 regra
 33. <num> ::= [+ | -] <dıgito> {<dıgito>} [. <dıgito> {<dıgito>}] [E [+ | -] <dıgito> {<dıgito>}] ## 1 regra
 34. <num-int> ::= <dıgito> {<dıgito>} ## 1 regra
 36. <ident> ::= <letra> {<letra> | <dıgito>} ## 1 regra
-38. <abre-chave> ::= { ## 1 regra
-39. <fecha-chave> ::= } ## 1 regra
-40. <abre-colchete> ::= [ ## 1 regra
-41. <fecha-colchete> ::= ] ## 1 regra
 
-3. <declaracao> ::= <var-declaracao> | <fun-declaracao> ## 2 regras
-4. <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete> {<abre-colchete> <num-int> <fecha-colchete>} ; ## 2 regras
+3. <declaracao> ::= <tipo-especificador> <ident> <declaracao-aux> ## 1 regras
+4. <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete>  <var-declaracao-aux-loop>; ## 2 regras
+4.2 <var-declaracao-aux-loop> ::= {<abre-colchete> <num-int> <fecha-colchete>}
 8. <params> ::= <param-lista> | void ## 2 regras
 10. <param-aux> ::= #vazio# | <abre-colchete> <fecha-colchete> ## 2 regras
 15. <expressao-decl> ::= <expressao> ; | ; ## 2 regras
 16. <selecao-decl-aux> ::= #vazio# | else <comando> ## 2 regras
-19. <retorno-decl> ::= return ; | return <expressao> ; ## 2 regras
+19. <retorno-decl> ::= return <retorno-decl-aux>  ## 1 regra
+19.1 <retorno-decl-aux ::= ; | <expressao> ; ## 2 regras
 20. <expressao> ::= <var> = <expressao> | <expressao-simples> ## 2 regras
 21. <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} ## 2 regras
 22. <expressao-simples-aux> ::= <relacional> <expressao-soma> | #vazio# ## 2 regras
@@ -46,8 +48,8 @@ Gramatica organizada em quantidade de regras
 
 5. <tipo-especificador> ::= int | float | char | void | struct <ident> <abre-chave> <atributos-declaracao> <fecha-chave> ## 5 regras
 14. <comando> ::= <expressao-decl> | <composto-decl> | <selecao-decl> | <iteracao-decl> | <retorno-decl> ## 5 regras
-29. <fator> ::= ( <expressao> ) | <var> | <ativacao> | <num> | <num-int> ## 5 regras
-
+29. <fator> ::= ( <expressao> ) | <ident> <fator-aux> | <num> | <num-int> ## 5 regras
+29.1 <fator-aux> ::= <var-aux> | <ativacao-aux>
 24. <relacional> ::= <= | < | > | >= | == | != ## 6 regras
 
 35. <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 ## 10 regras

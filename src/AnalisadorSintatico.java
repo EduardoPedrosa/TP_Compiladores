@@ -97,7 +97,7 @@ public class AnalisadorSintatico {
     private void Param(){
         TipoEspecificador();
         Ident();
-        Param2();
+        ParamAux();
     }
 
     private void LocalDeclaracoes(){
@@ -120,7 +120,7 @@ public class AnalisadorSintatico {
         Expressao();
         match(Token.TipoToken.FPARENTESES);
         Comando();
-        selecaoDeclAux();
+        SelecaoDeclAux();
     }
 
     private void IteracaoDecl(){
@@ -138,7 +138,15 @@ public class AnalisadorSintatico {
 
     private void ExpressaoSimples(){
         ExpressaoSoma();
-        ExpressaoSomaAux();
+        ExpressaoSomaAux(); 
+    }
+
+    private void ExpressaoSomaAux(){
+        if(ehProximo(Token.TipoToken.OPAR)){
+            Soma();
+            Termo();
+            ExpressaoSomaAux();
+        }
     }
 
     private void ExpressaoSoma(){
@@ -205,39 +213,126 @@ public class AnalisadorSintatico {
         match(Token.TipoToken.ID);
     }
 
-    /*private void Declaracao(){
+    private void Declaracao(){
         TipoEspecificador();
         Ident();
-        Declaracao2();
-    }*/
+        DeclaracaoAux();
+    }
 
-    /*private void Declaracao2(){
-        if(ehProximo(Token.TipoToken.DELIM)){
-            VarDeclaracao();
-        } else if((ehProximo(Token.TipoToken.APARENTESES) || ehProximo(Token.TipoToken.ACOLCHETES))){
-            FunDeclaracao();
+    private void DeclaracaoAux(){
+        if((ehProximo(Token.TipoToken.DELIM)) || (ehProximo(Token.TipoToken.ACOLCHETES))){
+            VarDeclaracaoAux();
+        } else if(ehProximo(Token.TipoToken.APARENTESES)){
+            FunDeclaracaoAux();
         } else {
             Erro();
         }
-    }*/
+    }
 
-    /*private void VarDeclaracao(){
+    private void VarDeclaracaoAux(){
         if(ehProximo(Token.TipoToken.DELIM)){
             match(Token.TipoToken.DELIM);
         } else if(ehProximo(Token.TipoToken.ACOLCHETES)){
             match(Token.TipoToken.ACOLCHETES);
             NumInt();
             match(Token.TipoToken.FCOLCHETES);
-            if(ehProximo(Token.TipoToken.ACOLCHETES)){
-                VarDeclaracao();
-            }
-            match(Token.TipoToken.DELIM);
+            VarDeclaracaoAuxLoop();
         } else {
             Erro();
         }
-    }*/
+    }
 
-    /*private void TipoEspecificador(){
+    private void VarDeclaracaoAuxLoop(){
+        if(ehProximo(Token.TipoToken.ACOLCHETES)){
+            match(Token.TipoToken.ACOLCHETES);
+            NumInt();
+            match(Token.TipoToken.FCOLCHETES);
+            VarDeclaracaoAuxLoop();
+        }
+    }
+
+    private void FunDeclaracaoAux(){
+        match(Token.TipoToken.APARENTESES);
+        Params();
+        match(Token.TipoToken.FPARENTESES);
+        CompostoDecl();
+    }
+
+    private void Params(){
+        if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){
+            ParamLista();
+        }
+    }
+
+    private void ParamAux(){
+        if(ehProximo(Token.TipoToken.ACOLCHETES)){
+            match(Token.TipoToken.ACOLCHETES);
+            match(Token.TipoToken.FCOLCHETES);
+        }
+    }
+
+    private void ExpressaoDecl(){
+        Expressao();   //verificar necessidade do ponto e virgula
+    }
+
+    private void SelecaoDeclAux(){
+        if(ehProximo(Token.TipoToken.ELSE)){
+            match(Token.TipoToken.ELSE);
+            Comando();
+        }
+    }
+
+    private void RetornoDecl(){
+        match(Token.TipoToken.RETURN);
+        RetornoDeclAux();
+    }
+
+    private void RetornoDeclAux(){
+        if(ehProximo(Token.TipoToken.DELIM)){
+            match(Token.TipoToken.DELIM);
+        } else {
+            Expressao();
+            match(Token.TipoToken.DELIM);
+        }
+    }
+
+    private void Expressao(){
+        if(ehProximo(Token.TipoToken.ID)){
+            Var();
+            match(Token.TipoToken.ATRIB);
+            Expressao();
+        } else if((ehProximo(Token.TipoToken.APARENTESES)) || (ehProximo(Token.TipoToken.ID)) || (ehProximo(Token.TipoToken.NUM)) || (ehProximo(Token.TipoToken.NUMFLOAT))){
+            ExpressaoSimples();
+        } else {
+            Erro();
+        }
+    }
+
+    private void VarAux(){
+        if(ehProximo(Token.TipoToken.ACOLCHETES)){
+            match(Token.TipoToken.ACOLCHETES);
+            Expressao();
+            match(Token.TipoToken.FCOLCHETES);
+            VarAux();
+        }
+    }
+
+    private void ExpressaoSimplesAux(){
+        if(ehProximo(Token.TipoToken.OPCOMP)){
+            match(Token.TipoToken.OPCOMP);
+            ExpressaoSoma();
+        }
+    }
+
+    private void Soma(){
+        match(Token.TipoToken.OPAR);
+    }    
+
+    private void Mult(){
+        match(Token.TipoToken.OPMULT);
+    }
+
+    private void TipoEspecificador(){
         if(ehProximo(Token.TipoToken.INT)){
             match(Token.TipoToken.INT);
         } else if(ehProximo(Token.TipoToken.FLOAT)){
@@ -250,33 +345,57 @@ public class AnalisadorSintatico {
             match(Token.TipoToken.STRUCT);
             Ident();
             match(Token.TipoToken.ACHAVES);
-            DeclaracaoLista();
+            AtributosDeclaracao();
             match(Token.TipoToken.FCHAVES);
         } else {
             Erro();
         }
     }
 
-    
-    private void Params(){
-        if(ehProximo(Token.TipoToken.VOID)){
-            match(Token.TipoToken.VOID);
+    private void Comando(){
+        if((ehProximo(Token.TipoToken.APARENTESES)) || (ehProximo(Token.TipoToken.ID)) || (ehProximo(Token.TipoToken.NUM)) || (ehProximo(Token.TipoToken.NUMFLOAT))){
+            ExpressaoDecl();
+        } else if(ehProximo(Token.TipoToken.ACHAVES)){
+            CompostoDecl();
+        } else if(ehProximo(Token.TipoToken.IF)){
+            SelecaoDecl();
+        } else if (ehProximo(Token.TipoToken.WHILE)){
+            IteracaoDecl();
+        } else if (ehProximo(Token.TipoToken.RETURN)){
+            RetornoDecl();
         } else {
-            ParamLista();
+            Erro();
         }
     }
 
-    
+    private void AtivacaoAux(){
+        match(Token.TipoToken.APARENTESES);
+        Args();
+        match(Token.TipoToken.FPARENTESES);
+    }
 
-    
-
-    private void Param2(){
-        if(ehProximo(Token.TipoToken.ACOLCHETES)){
-            match(Token.TipoToken.ACOLCHETES);
-            match(Token.TipoToken.FCOLCHETES);
+    private void Fator(){
+        if(ehProximo(Token.TipoToken.APARENTESES)){
+            match(Token.TipoToken.APARENTESES);
+            Expressao();
+            match(Token.TipoToken.FPARENTESES);
+        } else if(ehProximo(Token.TipoToken.ID)){
+            Ident();
+            FatorAux();
+        } else if (ehProximo(Token.TipoToken.NUMFLOAT)){
+            Num();
+        } else if (ehProximo(Token.TipoToken.NUM)){
+            NumInt();
+        } else {
+            Erro();
         }
-    }*/
+    }
 
-    
-    
+    private void FatorAux(){
+        if(ehProximo(Token.TipoToken.ACOLCHETES)){
+            VarAux();
+        } else if (ehProximo(Token.TipoToken.APARENTESES)){
+            AtivacaoAux();
+        }
+    }
 }
