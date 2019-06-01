@@ -1,64 +1,170 @@
 Gramatica organizada em quantidade de regras
 
-1. <programa> ::= <declaracao-lista> ## 1 regra
-2. <declaracao-lista> ::= <declaracao> {<declaracao>} ## 1 regra
-4.01 <declaracao-aux> ::= <var-declaracao-aux> | <fun-declaracao-aux>
-4.1 <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> ## 1 regra
-6. <atributos-declaracao> ::= <var-declaracao> <var-declaracao-loop>  ## 1 regra
-6.1 <var-declaracao-loop> ::= {<var-declaracao>}  ## 1 regra
-7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> ## 1 regra
-7. <fun-declaracao-aux> ::= ( <params> ) <composto-decl> ## 1 regra
-9. <param-lista> ::= <param> {, <param>} ## 1 regra
-11. <composto-decl> ::= <abre-chave> <local-declaracoes> <comando-lista> <fecha-chave> ## 1 regra
-10.1 <param> ::= <tipo-especificador> <ident> <param-aux> ## 1 regra
-12. <local-declaracoes> ::= {<var-declaracao>} ## 1 regra
-13. <comando-lista> ::= { <comando> } ## 1 regra
-16.1 <selecao-decl> ::= if ( <expressao> ) <comando> <selecao-decl-aux> ## 1 regra
-18. <iteracao-decl> ::= while ( <expressao> ) <comando> ## 1 regra
-21.1 <var> ::= <ident> <var-aux> ## 1 regra
-22.1 <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> ## 1 regra   
-25. <expressao-soma> ::= <termo> <expressao-soma-loop> ## 1 regra
-25.01 <expressao-soma-aux> ::= {<soma> <termo>} ##1 regra
-25.1 <expressao-soma-loop> ::= {<soma> <termo>} ## 1 regra
-27. <termo> ::= <fator> <termo-loop> ## 1 regra
-27.1 <termo-loop> ::= {<mult> <fator>} ## 1 regra
-30. <ativacao> ::= <ident> ( <args> ) ## 1 regra
-30.1 <ativacao-aux> ::= ( <args> ) ## 1 regra
-31. <args> ::= [<arg-lista>] ## 1 regra
-32. <arg-lista> ::= <expressao> <arg-lista-loop> ## 1 regra
-32.1 <arg-lista-loop> ::= {, <expressao>} ## 1 regra
-33. <num> ::= [+ | -] <dıgito> {<dıgito>} [. <dıgito> {<dıgito>}] [E [+ | -] <dıgito> {<dıgito>}] ## 1 regra
-34. <num-int> ::= <dıgito> {<dıgito>} ## 1 regra
-36. <ident> ::= <letra> {<letra> | <dıgito>} ## 1 regra
+1. <programa> ::= <declaracao-lista> ## 1 regra 
+Primeiros(<programa>) = { Primeiros(<declaracao-lista>) }
 
-3. <declaracao> ::= <tipo-especificador> <ident> <declaracao-aux> ## 1 regras
-4. <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete>  <var-declaracao-aux-loop>; ## 2 regras
-4.2 <var-declaracao-aux-loop> ::= {<abre-colchete> <num-int> <fecha-colchete>}
-8. <params> ::= <param-lista> | void ## 2 regras
-10. <param-aux> ::= #vazio# | <abre-colchete> <fecha-colchete> ## 2 regras
-15. <expressao-decl> ::= <expressao> ; | ; ## 2 regras
-16. <selecao-decl-aux> ::= #vazio# | else <comando> ## 2 regras
-19. <retorno-decl> ::= return <retorno-decl-aux>  ## 1 regra
-19.1 <retorno-decl-aux ::= ; | <expressao> ; ## 2 regras
-20. <expressao> ::= <ident> <expressao-2> | | <expressao-simples-2>
-20.1 <expressao-2> ::= <var-2> = <expressao> 
-20.2 <var-2> ::= <var-aux>
-20.3 <expressao-simples-2> ::= <expressao-soma-2> <expressao-soma-aux>
-20.4 <expressao-soma-2> ::= <termo2><expressao-soma-loop>
-20.5 <termo2> ::= <fator2><termo-loop>
-20.6 <fator2> ::= ( <expressao> ) | <num> | <num-int> ## 4 regras
+2. <declaracao-lista> ::= <declaracao> {<declaracao>} ## 1 regra 
+Primeiros(<declaracao-lista>) = { Primeiros(<declaracao>) }
 
-21. <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} ## 2 regras
-22. <expressao-simples-aux> ::= <relacional> <expressao-soma> | #vazio# ## 2 regras
-26. <soma> ::= + | - ## 2 regras
-28. <mult> ::= * | / ## 2 regras
+3. <declaracao> ::= <tipo-especificador> <ident> <declaracao-aux> ## 1 regras 
+Primeiros(<declaracao>) = { Primeiros(<tipo-especificador>) }
 
-5. <tipo-especificador> ::= int | float | char | void | struct <ident> <abre-chave> <atributos-declaracao> <fecha-chave> ## 5 regras
-14. <comando> ::= <expressao-decl> | <composto-decl> | <selecao-decl> | <iteracao-decl> | <retorno-decl> ## 5 regras
-29. <fator> ::= ( <expressao> ) | <ident> <fator-aux> | <num> | <num-int> ## 5 regras
-29.1 <fator-aux> ::= <var-aux> | <ativacao-aux>
-24. <relacional> ::= <= | < | > | >= | == | != ## 6 regras
+4.1 <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> ## 1 regra 
+Primeiros(<var-declaracao>) = { Primeiros(<tipo-especificador>) }
 
-35. <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 ## 10 regras
+4.01 <declaracao-aux> ::= <var-declaracao-aux> | <fun-declaracao-aux> ## 2 regras
+Primeiros(<declaracao-aux>) = { Primeiros(<var-declaracao-aux>), Primeiros(<fun-declaracao-aux>) }
 
-37. <letra> ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z ## 26 regras
+6. <atributos-declaracao> ::= <var-declaracao> <var-declaracao-loop>  ## 1 regra 
+Primeiros(<atributos-declaracao>) = { Primeiros(<var-declaracao>) }
+
+6.1 <var-declaracao-loop> ::= {<var-declaracao>}  ## 1 regra 
+Primeiros(<var-declaracao-loop>) = { Primeiros(<var-declaracao>)}
+
+7.1 <fun-declaracao-aux> ::= ( <params> ) <composto-decl> ## 1 regra 
+Primeiros(<fun-declaracao-aux>) = { '(' }
+
+7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> ## 1 regra 
+Primeiros(<fun-declaracao>) = { Primeiros(<tipo-especificador>) }
+
+9. <param-lista> ::= <param> {, <param>} ## 1 regra 
+Primeiros(<param-lista>) = { Primeiros(<param>) }
+
+11. <composto-decl> ::= <abre-chave> <local-declaracoes> <comando-lista> <fecha-chave> ## 1 regra 
+Primeiros(<composto-decl>) = { Primeiros(<abre-chave>) }
+
+10.1 <param> ::= <tipo-especificador> <ident> <param-aux> ## 1 regra 
+Primeiros(<param>) = { Primeiros(<tipo-especificador>) }
+
+12. <local-declaracoes> ::= {<var-declaracao>} ## 1 regra 
+Primeiros(<local-declaracoes>) = { Primeiros(<var-declaracao>) }
+
+13. <comando-lista> ::= { <comando> } ## 1 regra 
+Primeiros(<comando-lista>) = { Primeiros(<comando>) }
+
+16.1 <selecao-decl> ::= if ( <expressao> ) <comando> <selecao-decl-aux> ## 1 regra 
+Primeiros(<selecao-decl>) = { 'if' }
+
+18. <iteracao-decl> ::= while ( <expressao> ) <comando> ## 1 regra 
+Primeiros(<iteracao-decl>) = { 'while' }
+
+21.1 <var> ::= <ident> <var-aux> ## 1 regra 
+Primeiros(<var>) = { Primeiros(<ident>) }
+
+22.1 <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> ## 1 regra    
+Primeiros(<expressao-simples>) = { Primeiros(<expressao-soma>) }
+
+25.01 <expressao-soma-aux> ::= {<soma> <termo>} ##1 regra 
+Primeiros(<expressao-soma-aux>) = { Primeiros(<soma>) }
+
+25. <expressao-soma> ::= <termo> <expressao-soma-loop> ## 1 regra 
+Primeiros(<expressao-soma>) = { Primeiros(<termo>) }
+
+25.1 <expressao-soma-loop> ::= {<soma> <termo>} ## 1 regra 
+Primeiros(<expressao-soma-loop>) = { Primeiros(<soma>) }
+
+27. <termo> ::= <fator> <termo-loop> ## 1 regra 
+Primeiros(<termo>) = { Primeiros(<fator>) }
+
+27.1 <termo-loop> ::= {<mult> <fator>} ## 1 regra 
+Primeiros(<termo-loop>) = { Primeiros(<mult>) }
+
+30. <ativacao> ::= <ident> ( <args> ) ## 1 regra 
+Primeiros(<ativacao>) = { Primeiros(<ident>) }
+
+31. <args> ::= [<arg-lista>] ## 1 regra 
+Primeiros(<args>) = { Primeiros(<arg-lista>) }
+
+32. <arg-lista> ::= <expressao> <arg-lista-loop> ## 1 regra 
+Primeiros(<arg-lista>) = { Primeiros(<expressao>) }
+
+32.1 <arg-lista-loop> ::= {, <expressao>} ## 1 regra 
+Primeiros(<arg-lista-loop>) = { ',' }
+
+33. <num> ::= [+ | -] <dıgito> {<dıgito>} [. <dıgito> {<dıgito>}] [E [+ | -] <dıgito> {<dıgito>}] ## 1 regra 
+Primeiros(<num>) = { '+', '-' }
+
+34. <num-int> ::= <dıgito> {<dıgito>} ## 1 regra 
+Primeiros(<num-int>) = { Primeiros(<digito>) }
+
+36. <ident> ::= <letra> {<letra> | <dıgito>} ## 1 regra 
+Primeiros(<ident>) = { Primeiros(<letra>) }
+
+4. <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete>  <var-declaracao-aux-loop>; ## 2 regras 
+Primeiros(<var-declaracao-aux>) = { ';', '[' }
+
+4.2 <var-declaracao-aux-loop> ::= {<abre-colchete> <num-int> <fecha-colchete>} ## 1 regra
+Primeiros(<var-declaracao-aux-loop>) = { '[' }
+
+8. <params> ::= <param-lista> | void ## 2 regras 
+Primeiros(<params>) = { Primeiros(<param-lista>), 'void'}
+
+10. <param-aux> ::= #vazio# | <abre-colchete> <fecha-colchete> ## 2 regras 
+Primeiros(<param-aux>) = { '#vazio#', '['}
+
+15. <expressao-decl> ::= <expressao> ; | ; ## 2 regras 
+Primeiros(<expressao-decl>) = { Primeiros(<expressao>, ';') }
+
+16. <selecao-decl-aux> ::= #vazio# | else <comando> ## 2 regras 
+Primeiros(<selecao-decl-aux>) = { '#vazio#', 'else' }
+
+19. <retorno-decl> ::= return <retorno-decl-aux>  ## 1 regra 
+Primeiros(<retorno-decl>) = { 'return' }
+
+19.1 <retorno-decl-aux ::= ; | <expressao> ; ## 2 regras 
+Primeiros(<retorno-decl-aux) = { ';', Primeiros<expressao>}
+
+20. <expressao> ::= <ident> <expressao-2> | <expressao-simples-2> ## 1 regra
+Primeiros(<expressao>) = { Primeiros(<ident>) }
+
+20.1 <expressao-2> ::= <var-2> = <expressao> ## 1 regra
+Primeiros(<expressao-2>) = { Primeiros(<var-2>) }
+
+20.2 <var-2> ::= <var-aux> ## 1 regra
+Primeiros(<var-2>) = { Primeiros(<var-aux>) }
+
+20.3 <expressao-simples-2> ::= <expressao-soma-2> <expressao-soma-aux> ## 1 regra
+Primeiros(<expressao-simples-2>) = { Primeiros(<expressao-soma-2>) }
+
+20.4 <expressao-soma-2> ::= <termo2><expressao-soma-loop> ## 1 regra
+Primeiros(<expressao-soma-2>) = { Primeiros(<termo2>) }
+
+20.5 <termo2> ::= <fator2><termo-loop> ## 1 regra
+Primeiros(<termo2>) = { Primeiros(<fator2>) }
+
+20.6 <fator2> ::= ( <expressao> ) | <num> | <num-int> ## 3 regras 
+Primeiros(<fator2>) = { '(', Primeiros(<num>), Primeiros(<num-int>) }
+
+21. <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} ## 2 regras 
+Primeiros(<var-aux>) = { '#vazio#', '[' }
+
+22. <expressao-simples-aux> ::= <relacional> <expressao-soma> | #vazio# ## 2 regras 
+Primeiros(<expressao-simples-aux>) = { Primeiros(<relacional>), '#vazio#' }
+
+26. <soma> ::= + | - ## 2 regras 
+Primeiros(<soma>) = { '+', '-'}
+
+28. <mult> ::= * | / ## 2 regras 
+Primeiros(<mult>) = { '*', '/' }
+
+5. <tipo-especificador> ::= int | float | char | void | struct <ident> <abre-chave> <atributos-declaracao> <fecha-chave> ## 5 regras 
+Primeiros(<tipo-especificador>) = { 'int', 'float', 'char', 'void', 'struct' }
+
+14. <comando> ::= <expressao-decl> | <composto-decl> | <selecao-decl> | <iteracao-decl> | <retorno-decl> ## 5 regras 
+Primeiros(<comando>) = { Primeiros(<expressao-decl>), Primeiros(<composto-decl>), Primeiros(<selecao-decl>), Primeiros(<iteracao-decl>), Primeiros(<retorno-decl>) }
+
+30.1 <ativacao-aux> ::= ( <args> ) ## 1 regra 
+Primeiros(<ativacao-aux>) = { ')' }
+
+29.1 <fator-aux> ::= <var-aux> | <ativacao-aux> ## 2 regras
+Primeiros(<fator-aux>) = { Primeiros(<var-aux>), Primeiros(<ativacao-aux>) }
+
+24. <relacional> ::= <= | < | > | >= | == | != ## 6 regras 
+Primeiros(<relacional>) = { OperadoresRelacionais }
+
+35. <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 ## 10 regras 
+Primeiros(<digito>) = { Dígitos }
+
+37. <letra> ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z ## 26 regras 
+Primeiros(<letra>) = { Letras }
+

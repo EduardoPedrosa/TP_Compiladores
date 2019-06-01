@@ -40,12 +40,12 @@ public class AnalisadorSintatico {
         return false;
     }
 
-    //<programa> ::= <declaração-lista>
+    // <programa> ::= <declaração-lista>
     private void Programa(){
         DeclaracaoLista();
     }
 
-    //<declaração-lista> ::= <declaração> {<declaração>}
+    // <declaração-lista> ::= <declaração> {<declaração>}
     private void DeclaracaoLista(){
         Declaracao();
         if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){
@@ -55,17 +55,20 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 4.1 <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> ## 1 regra
     private void VarDeclaracao(){
         TipoEspecificador();
         Ident();
         VarDeclaracaoAux();
     }
 
+    // 6. <atributos-declaracao> ::= <var-declaracao> <var-declaracao-loop>  ## 1 regra
     private void AtributosDeclaracao(){
         VarDeclaracao();
         VarDeclaracaoLoop();
     }
 
+    // 6.1 <var-declaracao-loop> ::= {<var-declaracao>}  ## 1 regra
     private void VarDeclaracaoLoop(){
         if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){
             VarDeclaracao();
@@ -76,6 +79,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> ## 1 regra
     private void FunDeclaracao(){
         TipoEspecificador();
         Ident();
@@ -85,6 +89,7 @@ public class AnalisadorSintatico {
         CompostoDecl();
     }
 
+    // 9. <param-lista> ::= <param> {, <param>} ## 1 regra
     private void ParamLista(){
         Param();
         if(ehProximo(Token.TipoToken.VIRGULA)){  
@@ -93,6 +98,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 11. <composto-decl> ::= <abre-chave> <local-declaracoes> <comando-lista> <fecha-chave> ## 1 regra
     private void CompostoDecl(){
         match(Token.TipoToken.ACHAVES);
         LocalDeclaracoes();
@@ -100,12 +106,14 @@ public class AnalisadorSintatico {
         match(Token.TipoToken.FCHAVES);
     }
 
+    // 10.1 <param> ::= <tipo-especificador> <ident> <param-aux> ## 1 regra
     private void Param(){
         TipoEspecificador();
         Ident();
         ParamAux();
     }
 
+    // 12. <local-declaracoes> ::= {<var-declaracao>} ## 1 regra
     private void LocalDeclaracoes(){
         if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){
             Declaracao();
@@ -113,6 +121,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 13. <comando-lista> ::= { <comando> } ## 1 regra
     private void ComandoLista(){
         if((ehProximo(Token.TipoToken.ID)) || (ehProximo(Token.TipoToken.APARENTESES)) || (ehProximo(Token.TipoToken.OPAR)) || (ehProximo(Token.TipoToken.NUM)) || (ehProximo(Token.TipoToken.NUMFLOAT)) || (ehProximo(Token.TipoToken.ACHAVES)) || (ehProximo(Token.TipoToken.IF)) || (ehProximo(Token.TipoToken.WHILE)) || (ehProximo(Token.TipoToken.RETURN))){
             Comando();
@@ -120,6 +129,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 16.1 <selecao-decl> ::= if ( <expressao> ) <comando> <selecao-decl-aux> ## 1 regra
     private void SelecaoDecl(){
         match(Token.TipoToken.IF);
         match(Token.TipoToken.APARENTESES);
@@ -129,6 +139,7 @@ public class AnalisadorSintatico {
         SelecaoDeclAux();
     }
 
+    // 18. <iteracao-decl> ::= while ( <expressao> ) <comando> ## 1 regra
     private void IteracaoDecl(){
         match(Token.TipoToken.WHILE);
         match(Token.TipoToken.APARENTESES);
@@ -137,16 +148,19 @@ public class AnalisadorSintatico {
         Comando();
     }
 
+    // 21.1 <var> ::= <ident> <var-aux> ## 1 regra
     private void Var(){
         Ident();
         VarAux();
     }
 
+    // 22.1 <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> ## 1 regra   
     private void ExpressaoSimples(){
         ExpressaoSoma();
         ExpressaoSomaAux(); 
     }
 
+    // 25.01 <expressao-soma-aux> ::= {<soma> <termo>} ##1 regra
     private void ExpressaoSomaAux(){
         if(ehProximo(Token.TipoToken.OPAR)){
             Soma();
@@ -155,11 +169,13 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 25. <expressao-soma> ::= <termo> <expressao-soma-loop> ## 1 regra
     private void ExpressaoSoma(){
         Termo();
         ExpressaoSomaLoop();
     }
 
+    // 25.1 <expressao-soma-loop> ::= {<soma> <termo>} ## 1 regra
     private void ExpressaoSomaLoop(){
         if(ehProximo(Token.TipoToken.OPAR)){
             Soma();
@@ -168,11 +184,13 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 27. <termo> ::= <fator> <termo-loop> ## 1 regra
     private void Termo(){
         Fator();
         TermoLoop();
     }
 
+    // 27.1 <termo-loop> ::= {<mult> <fator>} ## 1 regra
     private void TermoLoop(){
         if(ehProximo(Token.TipoToken.OPMULT)){
             Mult();
@@ -181,6 +199,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 30. <ativacao> ::= <ident> ( <args> ) ## 1 regra
     private void Ativacao(){
         Ident();
         match(Token.TipoToken.APARENTESES);
@@ -188,17 +207,20 @@ public class AnalisadorSintatico {
         match(Token.TipoToken.FPARENTESES);
     }
 
+    // 31. <args> ::= [<arg-lista>] ## 1 regra
     private void Args(){
         if((ehProximo(Token.TipoToken.ID)) || (ehProximo(Token.TipoToken.APARENTESES)) || (ehProximo(Token.TipoToken.NUM)) || (ehProximo(Token.TipoToken.NUMFLOAT))){
             ArgLista();
         }
     }
 
+    // 32. <arg-lista> ::= <expressao> <arg-lista-loop> ## 1 regra
     private void ArgLista(){
         Expressao();
         ArgListaLoop();
     }
 
+    // 32.1 <arg-lista-loop> ::= {, <expressao>} ## 1 regra
     private void ArgListaLoop(){
         if(ehProximo(Token.TipoToken.VIRGULA)){
             match(Token.TipoToken.VIRGULA);
@@ -207,24 +229,29 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 33. <num> ::= [+ | -] <dıgito> {<dıgito>} [. <dıgito> {<dıgito>}] [E [+ | -] <dıgito> {<dıgito>}] ## 1 regra
     private void Num(){
         match(Token.TipoToken.NUMFLOAT);
     }
 
+    // 34. <num-int> ::= <dıgito> {<dıgito>} ## 1 regra
     private void NumInt(){
         match(Token.TipoToken.NUM);
     }
 
+    // 36. <ident> ::= <letra> {<letra> | <dıgito>} ## 1 regra
     private void Ident(){
         match(Token.TipoToken.ID);
     }
 
+    // 3. <declaracao> ::= <tipo-especificador> <ident> <declaracao-aux> ## 1 regras
     private void Declaracao(){
         TipoEspecificador();
         Ident();
         DeclaracaoAux();
     }
 
+    // 4.01 <declaracao-aux> ::= <var-declaracao-aux> | <fun-declaracao-aux>
     private void DeclaracaoAux(){
         if((ehProximo(Token.TipoToken.DELIM)) || (ehProximo(Token.TipoToken.ACOLCHETES))){
             VarDeclaracaoAux();
@@ -235,6 +262,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 4. <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete>  <var-declaracao-aux-loop>; ## 2 regras
     private void VarDeclaracaoAux(){
         if(ehProximo(Token.TipoToken.DELIM)){
             match(Token.TipoToken.DELIM);
@@ -248,6 +276,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 4.2 <var-declaracao-aux-loop> ::= {<abre-colchete> <num-int> <fecha-colchete>}
     private void VarDeclaracaoAuxLoop(){
         if(ehProximo(Token.TipoToken.ACOLCHETES)){
             match(Token.TipoToken.ACOLCHETES);
@@ -257,6 +286,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 7. <fun-declaracao-aux> ::= ( <params> ) <composto-decl> ## 1 regra
     private void FunDeclaracaoAux(){
         match(Token.TipoToken.APARENTESES);
         Params();
@@ -264,12 +294,14 @@ public class AnalisadorSintatico {
         CompostoDecl();
     }
 
+    // 8. <params> ::= <param-lista> | void ## 2 regras
     private void Params(){
         if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){
             ParamLista();
         }
     }
 
+    // 10. <param-aux> ::= #vazio# | <abre-colchete> <fecha-colchete> ## 2 regras
     private void ParamAux(){
         if(ehProximo(Token.TipoToken.ACOLCHETES)){
             match(Token.TipoToken.ACOLCHETES);
@@ -277,10 +309,12 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 15. <expressao-decl> ::= <expressao> ; | ; ## 2 regras
     private void ExpressaoDecl(){
         Expressao();   //verificar necessidade do ponto e virgula
     }
 
+    // 16. <selecao-decl-aux> ::= #vazio# | else <comando> ## 2 regras
     private void SelecaoDeclAux(){
         if(ehProximo(Token.TipoToken.ELSE)){
             match(Token.TipoToken.ELSE);
@@ -288,11 +322,13 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 19. <retorno-decl> ::= return <retorno-decl-aux>  ## 1 regra
     private void RetornoDecl(){
         match(Token.TipoToken.RETURN);
         RetornoDeclAux();
     }
 
+    // 19.1 <retorno-decl-aux ::= ; | <expressao> ; ## 2 regras
     private void RetornoDeclAux(){
         if(ehProximo(Token.TipoToken.DELIM)){
             match(Token.TipoToken.DELIM);
@@ -302,6 +338,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 20. <expressao> ::= <ident> <expressao-2> | | <expressao-simples-2>
     private void Expressao(){ //erro
         if(ehProximo(Token.TipoToken.ID)){
             Ident();
@@ -313,6 +350,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 20.1 <expressao-2> ::= <var-2> = <expressao> 
     private void Expressao2(){
         if((ehProximo(Token.TipoToken.APARENTESES)) || (ehProximo(Token.TipoToken.NUM)) || (ehProximo(Token.TipoToken.APARENTESES)) ){
             ExpressaoSimples2();
@@ -320,29 +358,34 @@ public class AnalisadorSintatico {
             Var2();
             match(Token.TipoToken.ATRIB);
             Expressao();
-        }
+        }   
         
     }
 
+    // 20.2 <var-2> ::= <var-aux>
     private void Var2(){
         VarAux();
     }
 
+    // 20.3 <expressao-simples-2> ::= <expressao-soma-2> <expressao-soma-aux>
     private void ExpressaoSimples2(){
         ExpressaoSoma2();
         ExpressaoSomaAux();
     }
 
+    // 20.4 <expressao-soma-2> ::= <termo2><expressao-soma-loop>
     private void ExpressaoSoma2(){
         Termo2();
         ExpressaoSomaLoop();
     }
 
+    // 20.5 <termo2> ::= <fator2><termo-loop>
     private void Termo2(){
         Fator2();
         TermoLoop();
     }
 
+    // 20.6 <fator2> ::= ( <expressao> ) | <num> | <num-int> ## 4 regras
     private void Fator2(){
         if(ehProximo(Token.TipoToken.APARENTESES)){
             match(Token.TipoToken.APARENTESES);
@@ -357,6 +400,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 21. <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} ## 2 regras
     private void VarAux(){
         if(ehProximo(Token.TipoToken.ACOLCHETES)){
             match(Token.TipoToken.ACOLCHETES);
@@ -366,6 +410,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 22. <expressao-simples-aux> ::= <relacional> <expressao-soma> | #vazio# ## 2 regras
     private void ExpressaoSimplesAux(){
         if(ehProximo(Token.TipoToken.OPCOMP)){
             match(Token.TipoToken.OPCOMP);
@@ -373,14 +418,17 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 26. <soma> ::= + | - ## 2 regras
     private void Soma(){
         match(Token.TipoToken.OPAR);
     }    
 
+    // s28. <mult> ::= * | / ## 2 regras
     private void Mult(){
         match(Token.TipoToken.OPMULT);
     }
 
+    // 5. <tipo-especificador> ::= int | float | char | void | struct <ident> <abre-chave> <atributos-declaracao> <fecha-chave> ## 5 regras
     private void TipoEspecificador(){
         if(ehProximo(Token.TipoToken.INT)){
             match(Token.TipoToken.INT);
@@ -401,6 +449,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 14. <comando> ::= <expressao-decl> | <composto-decl> | <selecao-decl> | <iteracao-decl> | <retorno-decl> ## 5 regras
     private void Comando(){
         if((ehProximo(Token.TipoToken.APARENTESES)) || (ehProximo(Token.TipoToken.ID)) || (ehProximo(Token.TipoToken.NUM)) || (ehProximo(Token.TipoToken.NUMFLOAT))){
             ExpressaoDecl();
@@ -417,12 +466,14 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 30.1 <ativacao-aux> ::= ( <args> ) ## 1 regra
     private void AtivacaoAux(){
         match(Token.TipoToken.APARENTESES);
         Args();
         match(Token.TipoToken.FPARENTESES);
     }
 
+    // 29. <fator> ::= ( <expressao> ) | <ident> <fator-aux> | <num> | <num-int> ## 5 regras
     private void Fator(){
         if(ehProximo(Token.TipoToken.APARENTESES)){
             match(Token.TipoToken.APARENTESES);
@@ -440,6 +491,7 @@ public class AnalisadorSintatico {
         }
     }
 
+    // 29.1 <fator-aux> ::= <var-aux> | <ativacao-aux>
     private void FatorAux(){
         if(ehProximo(Token.TipoToken.ACOLCHETES)){
             VarAux();
