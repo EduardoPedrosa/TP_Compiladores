@@ -105,6 +105,9 @@ Primeiros(<tipo-especificador>) = {% 'int', 'float', 'char', 'void', 'struct' %}
 30.1 <ativacao-aux> ::= ( <args> ) ## 1 regra 
 Primeiros(<ativacao-aux>) = {% '(' %}
 
+29. <fator> ::= ( <expressao> ) | <var> | <ativacao> | <num> | <num-int> ## 5 regras
+Primeiros(<fator>) = {% '(', {% {% {% Letras %} %} %}, {% {% {% Letras %} %} %}, {% '+', '-', {% Digitos %} %}, {% {% Digitos %} %} %}
+
 29.1 <fator-aux> ::= <var-aux> | <ativacao-aux> ## 2 regras
 Primeiros(<fator-aux>) = {% {% '#vazio#', '[' %}, {% '(' %} %}
 
@@ -159,14 +162,11 @@ Primeiros(<comando>) = {% {% {% {% {% Letras %} %}, {% {% {% {% '(', {% '+', '-'
 13. <comando-lista> ::= { <comando> } ## 1 regra 
 Primeiros(<comando-lista>) = {% {% {% {% {% {% Letras %} %}, {% {% {% {% '(', {% '+', '-', {% Digitos %} %}, {% {% Digitos %} %} %} %} %} %} %}, ';') %}, {% '{' %}, {% 'if' %}, {% 'while' %}, {% 'return' %} %} %}
 
-
-###################### OS ABAIXO NÃO DÃO PRA VERIFICAR O CONJUNTO DE PRIMEIROS. FALTA A VARIAVEL <FATOR> ######################
-
 22.1 <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> ## 1 regra    
-Primeiros(<expressao-simples>) = { Primeiros(<expressao-soma>) }
+Primeiros(<expressao-simples>) = {% {% {% {% '(', {% {% {% Letras %} %} %}, {% {% {% Letras %} %} %}, {% '+', '-', {% Digitos %} %}, {% {% Digitos %} %} %} %} %} %}
 
 25. <expressao-soma> ::= <termo> <expressao-soma-loop> ## 1 regra 
-Primeiros(<expressao-soma>) = { Primeiros(<termo>) }
+Primeiros(<expressao-soma>) = {% {% {% '(', {% {% {% Letras %} %} %}, {% {% {% Letras %} %} %}, {% '+', '-', {% Digitos %} %}, {% {% Digitos %} %} %} %} %}
 
 27. <termo> ::= <fator> <termo-loop> ## 1 regra 
-Primeiros(<termo>) = { Primeiros(<fator>) }
+Primeiros(<termo>) = {% {% '(', {% {% {% Letras %} %} %}, {% {% {% Letras %} %} %}, {% '+', '-', {% Digitos %} %}, {% {% Digitos %} %} %} %}
