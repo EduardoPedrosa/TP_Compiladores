@@ -1,0 +1,86 @@
+1. <programa> ::= <declaracao-lista>
+
+2. <declaracao-lista> ::= <declaracao> {<declaracao>} 
+
+3. <declaracao> ::= <var-declaracao> | <fun-declaracao> 
+
+4.1 <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> 
+
+4. <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete> {<abre-colchete> <num-int> <fecha-colchete>} ; 
+
+5. <tipo-especificador> ::= int | float | char | void | struct <ident> <abre-chave> <atributos-declaracao> <fecha-chave> 
+
+6. <atributos-declaracao> ::= <var-declaracao> {<var-declaracao>} 
+
+7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> 
+
+8. <params> ::= <param-lista> | void 
+
+9. <param-lista> ::= <param> {, <param>} 
+
+10.1 <param> ::= <tipo-especificador> <ident> <param-aux> 
+
+10. <param-aux> ::= #vazio# | <abre-colchete> <fecha-colchete> 
+
+11. <composto-decl> ::= <abre-chave> <local-declaracoes> <comando-lista> <fecha-chave> 
+
+12. <local-declaracoes> ::= {<var-declaracao>} 
+
+13. <comando-lista> ::= { <comando> } 
+
+14. <comando> ::= <expressao-decl> | <composto-decl> | <selecao-decl> | <iteracao-decl> | <retorno-decl> 
+
+15. <expressao-decl> ::= <expressao> ; | ; 
+
+16.1 <selecao-decl> ::= if ( <expressao> ) <comando> <selecao-decl-aux> 
+
+16. <selecao-decl-aux> ::= #vazio# | else <comando> 
+
+18. <iteracao-decl> ::= while ( <expressao> ) <comando>
+
+19. <retorno-decl> ::= return ; | return <expressao> ; 
+
+20. <expressao> ::= <var> = <expressao> | <expressao-simples> 
+
+21.1 <var> ::= <ident> <var-aux> 
+
+21. <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} 
+
+22.1 <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> 
+
+22. <expressao-simples-aux> ::= <relacional> <expressao-soma> | #vazio#
+
+24. <relacional> ::= <= | < | > | >= | == | != 
+
+25. <expressao-soma> ::= <termo> {<soma> <termo>} 
+
+26. <soma> ::= + | - 
+
+27. <termo> ::= <fator> {<mult> <fator>} 
+
+28. <mult> ::= * | / 
+
+29. <fator> ::= ( <expressao> ) | <var> | <ativacao> | <num> | <num-int> 
+
+30. <ativacao> ::= <ident> ( <args> ) 
+
+31. <args> ::= [<arg-lista>] 
+
+32. <arg-lista> ::= <expressao> {, <expressao>} 
+
+33. <num> ::= [+ | -] <dıgito> {<dıgito>} [. <dıgito> {<dıgito>}] 
+
+34. <num-int> ::= <dıgito> {<dıgito>} 
+
+35. <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
+
+36. <ident> ::= <letra> {<letra> | <dıgito>} 
+
+37. <letra> ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z 
+38. <abre-chave> ::= { 
+
+39. <fecha-chave> ::= } 
+
+40. <abre-colchete> ::= [
+
+41. <fecha-colchete> ::= ] 

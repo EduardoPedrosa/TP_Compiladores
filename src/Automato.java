@@ -104,7 +104,7 @@ public class Automato {
 		estadosFinais.put(6, Token.TipoToken.INT);
 		estadosFinais.put(12, Token.TipoToken.FLOAT);
 		estadosFinais.put(48, Token.TipoToken.ID);
-		estadosFinais.put(17, Token.TipoToken.CAR);
+		estadosFinais.put(17, Token.TipoToken.CHAR);
 		estadosFinais.put(22, Token.TipoToken.VOID);
 		estadosFinais.put(29, Token.TipoToken.STRUCT);
 		estadosFinais.put(95, Token.TipoToken.ELSE);

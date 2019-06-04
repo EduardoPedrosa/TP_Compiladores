@@ -7,7 +7,7 @@
                     Matheus Henrique Carvalho de Paiva Resende
 */
 public class Token {
-	public static enum TipoToken{ID,NUM,NUMFLOAT,CAR,OPAR,OPMULT,OPCOMP,OPCOMENT,DELIM,VIRGULA, ATRIB, INT, FLOAT, STRUCT, IF, ELSE, WHILE, VOID, RETURN,
+	public static enum TipoToken{ID,NUM,NUMFLOAT, CHAR, CAR,OPAR,OPMULT,OPCOMP,OPCOMENT,DELIM,VIRGULA, ATRIB, INT, FLOAT, STRUCT, IF, ELSE, WHILE, VOID, RETURN,
 		APARENTESES, FPARENTESES, ACHAVES, FCHAVES, ACOLCHETES, FCOLCHETES,
 		ERROR,PANIC,FIM}; 
 			//Os tipos ERROR e PANIC é so pra dar o feedback de erro no analisador léxico

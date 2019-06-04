@@ -1,12 +1,16 @@
-int a;
-int b;
-float f;
-int elevado(){
-	while(a = 10){
-		f = f * f; /* faz f^9 */
-		a = a + 1;	
-	}
-char result = 'r';
-print(result);
-print('='); 
-print(f);
+void func(){
+    int a;  
+    int b;
+    float f;
+    int elevado(){
+        while(a < 10){
+            f = f * f; /* faz f^9 */
+            a = a + 1;	
+        }
+    }
+    char result;
+    result = 'r';
+    print(result);
+    print('='); 
+    print(f);
+}
