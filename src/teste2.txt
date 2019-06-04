@@ -1,6 +1,18 @@
-int main(){
+int main() {
     int a;
     foalt b;
     b = a +;
+    intr c;
+    b = c ++ c;
     print a;
+    a = a * b *+ c;
+}
+
+void teste(int a, float b){
+    int a(b);
+    while(a < 10){
+        a = a + 1;
+        a;
+    }
+    return a
 }

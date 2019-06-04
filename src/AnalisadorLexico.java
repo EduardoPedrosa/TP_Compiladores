@@ -15,10 +15,12 @@ import java.util.ArrayList;
 public class AnalisadorLexico {
 	private Automato automato;
 	private List<Token> tokens;
+	boolean erro;
 
 	public AnalisadorLexico() {
 		automato = new Automato();
 		tokens = new ArrayList<Token>();
+		erro = false;
 	}
 	
 	public void Analisar(BufferedReader arquivo) throws IOException{
@@ -37,9 +39,11 @@ public class AnalisadorLexico {
 				if (tipoToken != null) {
 					if(tipoToken == Token.TipoToken.PANIC){
 						System.out.println("Warning - linha " + numLinha + " e coluna " + numColuna + " - tratado com panic mode");
+						erro = true;
 					} else if(tipoToken == Token.TipoToken.ERROR){
 						achouErroLexico = true;
 						System.out.println("Erro lexico na linha " + numLinha + " e coluna " + numColuna);
+						erro = true;
 					} else {
 						// INSERINDO NA TABELA DE SIMBOLOS CASO FOR IDENTIFICADOR OU CONSTANTE
 						int indiceTS = -1;
@@ -74,13 +78,15 @@ public class AnalisadorLexico {
 			}
 		}
 		//IMPRIMINDO TOKENS
-		if(!achouErroLexico){
+		/*if(!achouErroLexico){
 			for (Token t : tokens){
 				System.out.println(t);
 			}
-		}
+		}*/
 		tokens.add(new Token(Token.TipoToken.FIM,"",numLinha,numColuna));
-	
+		if(!erro){
+			System.out.println("Analise lexica realizada com sucesso");
+		}
 	}
 	public List<Token> getTokens(){
 		return tokens;

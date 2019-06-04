@@ -4,23 +4,35 @@ import java.util.ArrayList;
 public class AnalisadorSintatico {
     private List<Token> tokens;
     private int indexToken;
+    boolean erro;
 
     public AnalisadorSintatico(AnalisadorLexico lexico){
         tokens = lexico.getTokens();
         indexToken = 0;
+        erro = false;
     }
 
     public void executarAnaliseSintatica(){
         Programa();
+        match(Token.TipoToken.FIM);
+        if(!erro){
+            System.out.println("Analise sintatica realizada com sucesso");
+        }
     }
 
     private Token getTokenAtual(){
+        if(indexToken >= tokens.size()){
+            indexToken = tokens.size()-1;
+        }
         return tokens.get(indexToken);
     }
 
     private void Erro(){
         Token token = getTokenAtual();
-        System.out.println("Erro sintatico na linha " + token.getNumLinha() + " coluna " + token.getNumColuna() + " " + token);
+        if(token.getTipoToken() != Token.TipoToken.FIM){
+            System.out.println("Erro sintatico na linha " + token.getNumLinha() + " coluna " + token.getNumColuna() + ", encontrou " + token.getTipoToken());
+        }
+        erro = true;
     }
 
     private void match(Token.TipoToken esperado){
@@ -28,26 +40,38 @@ public class AnalisadorSintatico {
         if(atual.getTipoToken() == esperado){
                 ++indexToken;
         } else {
-            System.out.println("Tipo de token nao esperado na linha " + atual.getNumLinha() + " coluna " + atual.getNumColuna());
-            while(atual.getTipoToken() != esperado){
-                ++indexToken;
-                atual = getTokenAtual();
+            System.out.println("Tipo de token nao esperado na linha " + atual.getNumLinha() + " coluna " + atual.getNumColuna() + " esperava " + esperado);
+            erro = true;
+            boolean acabou = false;
+            while((atual.getTipoToken() != esperado)&&(!acabou)){
+                if(!(atual.getTipoToken() == Token.TipoToken.FIM)){
+                    ++indexToken;
+                    atual = getTokenAtual();
+                } else {
+                    acabou = true;
+                }
             }
+            ++indexToken;
         }
     }
     //funcao ehProximo, recebe o token e quantos a frente vai dar uma espiada
     private boolean ehProximo(Token.TipoToken tipo, int i) {
-        Token token = tokens.get(indexToken+(i-1));
-        if (token.getTipoToken() == tipo) {
-            return true;
+        int indice = indexToken+(i-1);
+        if(indice < tokens.size()){
+            Token token = tokens.get(indice);
+            if (token.getTipoToken() == tipo) {
+                return true;
+            }
         }
         return false;
     }
 
     private boolean ehProximo(Token.TipoToken tipo) {
-        Token token = tokens.get(indexToken);
-        if (token.getTipoToken() == tipo) {
-            return true;
+        if(indexToken < tokens.size()){
+            Token token = tokens.get(indexToken);
+            if (token.getTipoToken() == tipo) {
+                return true;
+            }
         }
         return false;
     }
@@ -95,7 +119,7 @@ public class AnalisadorSintatico {
             NumInt();
             match(Token.TipoToken.FCOLCHETES);
             VarDeclaracaoAuxLoop();
-        } else {
+        } else if(!ehProximo(Token.TipoToken.FIM)){
             Erro();
         }
     }
@@ -221,7 +245,7 @@ public class AnalisadorSintatico {
             match(Token.TipoToken.FCOLCHETES);
         } else if(ehProximo(Token.TipoToken.ID)){
             Ident();
-        } else {
+        } else if(!ehProximo(Token.TipoToken.FIM)){
             Erro();
         }
     }
@@ -280,7 +304,7 @@ public class AnalisadorSintatico {
             match(Token.TipoToken.ACHAVES);
             AtributosDeclaracao();
             match(Token.TipoToken.FCHAVES);
-        } else {
+        } else if(!ehProximo(Token.TipoToken.FIM)){
             Erro();
         }
     }
@@ -297,7 +321,7 @@ public class AnalisadorSintatico {
             IteracaoDecl();
         } else if (ehProximo(Token.TipoToken.RETURN)){
             RetornoDecl();
-        } else {
+        } else if(!ehProximo(Token.TipoToken.FIM)){
             Erro();
         }
     }
