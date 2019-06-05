@@ -1,16 +1,28 @@
 void func(){
     int a;  
     int b;
+    char c;
     float f;
-    int elevado(){
-        while(a < 10){
-            f = f * f; /* faz f^9 */
-            a = a + 1;	
-        }
+    struct tipoestrutura {
+        int numero;
+        char valor;
+    } estrutura;
+    if(a > b)
+        elevado(a);
+    else 
+        elevado (b);
+    
+}
+
+int elevado(int a){
+    while(a < 10){
+        f = f * f; /* faz f^9 */
+        a = a + 1;	
     }
-    char result;
+    c = 'a';
     result = 'r';
     print(result);
     print('='); 
     print(f);
+    return a;
 }

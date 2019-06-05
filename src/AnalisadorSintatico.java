@@ -99,6 +99,12 @@ public class AnalisadorSintatico {
         DeclaracaoAux();
     }
 
+    private void Declaracao2(){
+        TipoEspecificador();
+        Ident();
+        match(Token.TipoToken.DELIM);
+    }
+
     // 3.01 <declaracao-aux> ::= <var-declaracao-aux> | <fun-declaracao-aux>
     private void DeclaracaoAux(){
         if((ehProximo(Token.TipoToken.DELIM))   || (ehProximo(Token.TipoToken.ACOLCHETES))){
@@ -142,8 +148,6 @@ public class AnalisadorSintatico {
         if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CHAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){
             VarDeclaracao();
             VarDeclaracaoLoop();
-        } else if(!ehProximo(Token.TipoToken.FIM)){
-            Erro();
         }
     }
 
@@ -353,8 +357,8 @@ public class AnalisadorSintatico {
 
     // 12. <local-declaracoes> ::= {<var-declaracao>} ## 1 regra
     private void LocalDeclaracoes(){
-        if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CHAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){
-            Declaracao();
+        if((ehProximo(Token.TipoToken.INT)) || (ehProximo(Token.TipoToken.FLOAT)) || (ehProximo(Token.TipoToken.CHAR)) || (ehProximo(Token.TipoToken.VOID)) || (ehProximo(Token.TipoToken.STRUCT))){            
+            Declaracao2();
             LocalDeclaracoes();
         }
     }

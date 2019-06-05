@@ -278,6 +278,7 @@ public class Automato {
 		transicao[0][Alfabeto.U.ordinal()] = 47;
 		transicao[0][Alfabeto.H.ordinal()] = 47;
 		transicao[0][Alfabeto.D.ordinal()] = 47;
+		transicao[0][Alfabeto.N.ordinal()] = 47;
 		transicao[0][Alfabeto.LETRA.ordinal()] = 47;
 		transicao[1][Alfabeto.F.ordinal()] = 2;	
 		transicao[1][Alfabeto.N.ordinal()] = 4;
