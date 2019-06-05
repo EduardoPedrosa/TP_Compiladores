@@ -2,7 +2,7 @@
 #### Compilador (Front-End) para a linguagem "C-"
 
 >1.0. Análise Léxica<br>
->2.0 Análise Sintática
+>2.0. Análise Sintática
 <br>
 
 #### Staff: 
