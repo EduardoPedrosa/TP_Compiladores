@@ -12,7 +12,8 @@ void teste(int a, float b){
     int a(b);
     while(a < 10){
         a = a + 1;
-        a;
+        a = 2 +;
+        a = b;
     }
     return a
 }
