@@ -248,22 +248,7 @@ public class AnalisadorSintatico {
             Erro();
         }
     }
-
-    // 25.01 <expressao-soma-aux> ::= {<soma> <termo>} ##1 regra
-
-
-
-
-    // 21. <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} ## 2 regras
-    private void VarAux(){
-        if(ehProximo(Token.TipoToken.ACOLCHETES)){
-            match(Token.TipoToken.ACOLCHETES);
-            Expressao();
-            match(Token.TipoToken.FCOLCHETES);
-            VarAux();
-        }
-    }
-
+    
     // 22. <expressao-simples-aux> ::= <relacrm ional> <expressao-soma> | #vazio# ## 2 regras
     private void ExpressaoSimplesAux(){
         if(ehProximo(Token.TipoToken.OPCOMP)){

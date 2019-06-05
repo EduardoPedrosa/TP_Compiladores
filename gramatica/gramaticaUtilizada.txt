@@ -2,7 +2,11 @@
 
 2. <declaracao-lista> ::= <declaracao> {<declaracao>} 
 
-3. <declaracao> ::= <var-declaracao> | <fun-declaracao> 
+3. <declaracao> ::= <tipo-especificador> <ident> <declaracao-aux>
+
+3.1. <declaracao-aux> ::= <var-declaracao-aux> | <fun-declaracao>   
+
+3.2. <declaracao2> ::= <tipo-especificador> <ident> ;
 
 4. <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> 
 
@@ -12,7 +16,7 @@
 
 6. <atributos-declaracao> ::= <var-declaracao> {<var-declaracao>} 
 
-7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> 
+7. <fun-declaracao> ::= ( <params> ) <composto-decl> 
 
 8. <params> ::= <param-lista> | void 
 
@@ -24,7 +28,7 @@
 
 11. <composto-decl> ::= <abre-chave> <local-declaracoes> <comando-lista> <fecha-chave> 
 
-12. <local-declaracoes> ::= {<var-declaracao>} 
+12. <local-declaracoes> ::= {<declaracao2>} 
 
 13. <comando-lista> ::= { <comando> } 
 
@@ -38,13 +42,13 @@
 
 18. <iteracao-decl> ::= while ( <expressao> ) <comando>
 
-19. <retorno-decl> ::= return ; | return <expressao> ; 
+19. <retorno-decl> ::= return <retorno-decl-aux>
+
+19.1. <retorno-decl-aux> ::= ; | <expressao> ;
 
 20. <expressao> ::= <var> = <expressao> | <expressao-simples> 
 
-21. <var> ::= <ident> <var-aux> 
-
-21.1 <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} 
+21. <var> ::= <ident> <abre-colchetes> <expressao> <fecha-colchetes> | <abre-colchetes> <expressao> <fecha-colchetes> | <ident> 
 
 22. <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> 
 
