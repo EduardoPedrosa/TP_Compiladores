@@ -105,12 +105,12 @@ public class AnalisadorSintatico {
         match(Token.TipoToken.DELIM);
     }
 
-    // 3.01 <declaracao-aux> ::= <var-declaracao-aux> | <fun-declaracao-aux>
+    // 3.01 <declaracao-aux> ::= <var-declaracao-aux> | <fun-declaracao>
     private void DeclaracaoAux(){
         if((ehProximo(Token.TipoToken.DELIM))   || (ehProximo(Token.TipoToken.ACOLCHETES))){
             VarDeclaracaoAux();
         } else if(ehProximo(Token.TipoToken.APARENTESES)){
-            FunDeclaracaoAux();
+            FunDeclaracao();
         } else {
             Erro();
         }
@@ -151,15 +151,6 @@ public class AnalisadorSintatico {
         }
     }
 
-    // 7. <fun-declaracao> ::= <tipo-especificador> <ident> ( <params> ) <composto-decl> ## 1 regra
-    private void FunDeclaracao(){
-        TipoEspecificador();
-        Ident();
-        match(Token.TipoToken.APARENTESES);
-        Params();
-        match(Token.TipoToken.FPARENTESES);
-        CompostoDecl();
-    }
 
     // 4.2 <var-declaracao-aux-loop> ::= {<abre-colchete> <num-int> <fecha-colchete>}
     private void VarDeclaracaoAuxLoop(){
@@ -171,8 +162,8 @@ public class AnalisadorSintatico {
         }
     }
 
-    // 7. <fun-declaracao-aux> ::= ( <params> ) <composto-decl> ## 1 regra
-    private void FunDeclaracaoAux(){
+    // 7. <fun-declaracao> ::= ( <params> ) <composto-decl> ## 1 regra
+    private void FunDeclaracao(){
         match(Token.TipoToken.APARENTESES);
         Params();
         match(Token.TipoToken.FPARENTESES);
@@ -195,9 +186,13 @@ public class AnalisadorSintatico {
     }
 
     // 15. <expressao-decl> ::= <expressao> ; | ; ## 2 regras
-    private void ExpressaoDecl(){
-        Expressao();   //verificar necessidade do ponto e virgula
-        match(Token.TipoToken.DELIM);
+    private void ExpressaoDecl() {
+        if (ehProximo(Token.TipoToken.DELIM)) {
+            match(Token.TipoToken.DELIM);
+        } else {
+            Expressao();
+            match(Token.TipoToken.DELIM);
+        }
     }
 
     // 16. <selecao-decl-aux> ::= #vazio# | else <comando> ## 2 regras

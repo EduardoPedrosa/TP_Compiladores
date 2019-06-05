@@ -4,9 +4,9 @@
 
 3. <declaracao> ::= <var-declaracao> | <fun-declaracao> 
 
-4.1 <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> 
+4. <var-declaracao> ::= <tipo-especificador> <ident> <var-declaracao-aux> 
 
-4. <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete> {<abre-colchete> <num-int> <fecha-colchete>} ; 
+4.1 <var-declaracao-aux> ::= ; | <abre-colchete> <num-int> <fecha-colchete> {<abre-colchete> <num-int> <fecha-colchete>} ; 
 
 5. <tipo-especificador> ::= int | float | char | void | struct <ident> <abre-chave> <atributos-declaracao> <fecha-chave> 
 
@@ -42,13 +42,13 @@
 
 20. <expressao> ::= <var> = <expressao> | <expressao-simples> 
 
-21.1 <var> ::= <ident> <var-aux> 
+21. <var> ::= <ident> <var-aux> 
 
-21. <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} 
+21.1 <var-aux> ::= #vazio# | <abre-colchete> <expressao> <fecha-colchete> {<abre-colchete> <expressao> <fecha-colchete>} 
 
-22.1 <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> 
+22. <expressao-simples> ::= <expressao-soma> <expressao-soma-aux> 
 
-22. <expressao-simples-aux> ::= <relacional> <expressao-soma> | #vazio#
+22.1 <expressao-simples-aux> ::= <relacional> <expressao-soma> | #vazio#
 
 24. <relacional> ::= <= | < | > | >= | == | != 
 
