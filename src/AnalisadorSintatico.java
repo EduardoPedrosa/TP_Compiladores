@@ -12,12 +12,14 @@ public class AnalisadorSintatico {
         erro = false;
     }
 
-    public void executarAnaliseSintatica(){
+    public boolean executarAnaliseSintatica(){
         Programa();
         match(Token.TipoToken.FIM);
         if(!erro){
             System.out.println("Analise sintatica realizada com sucesso");
-        }
+            return true;
+        } 
+        return false;
     }
 
     private Token getTokenAtual(){

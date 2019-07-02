@@ -1,4 +1,4 @@
-/* 
+    /*
   Trabalho de Compiladores
   Analisador Léxico
   Copyright 2019 by Eduardo Miranda Pedrosa Filho,
@@ -21,8 +21,11 @@ public class main {
             AnalisadorLexico analisadorLex = new AnalisadorLexico();
             analisadorLex.Analisar(leitor);
             AnalisadorSintatico analisadorSin = new AnalisadorSintatico(analisadorLex);
-            analisadorSin.executarAnaliseSintatica();
+            boolean certo = analisadorSin.executarAnaliseSintatica();
             leitor.close();
+            if(certo){
+                Compiler geradorCod3End = new Compiler(nomeArq);
+            }
         } catch(IOException e) {
             System.out.println(e.getMessage());
         }
