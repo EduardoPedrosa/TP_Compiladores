@@ -1076,10 +1076,6 @@ class SyntaxAnalyser
                      
                   }
                
-               
-               
-               
-               
                   stack.pop();
                   return true;
                }

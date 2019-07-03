@@ -1,12 +1,7 @@
 void main(int c){
-	int a;	
+	int a;
 	int b;
-	while (a < 10)
-	{
-      a = 2 + 3 - 4;
-    }
     if(b == 3){
         a = 2 + 2;
     }
-    a = a + 1;  
 }
