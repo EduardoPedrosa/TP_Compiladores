@@ -10,3 +10,6 @@
 * Igor Henrique Torati Ruy
 * João Pedro Fachini Alvarenga
 * Matheus Henrique Carvalho de Paiva Resende
+
+Arquivo usado como base encontrado no repositório:
+https://github.com/NatnaelYil/C-Minus-Compiler-in-Java
